@@ -1,0 +1,2255 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КиберАкадемия Юных Изобретателей • 2 класс</title>
+    <!-- Подключение Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Шрифты Nunito и Inter для дружелюбного детского интерфейса -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Nunito:wght@700;800;900&display=swap" rel="stylesheet">
+    <!-- Иконки Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Конфетти для празднования побед -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        heading: ['Nunito', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#FFF7ED',
+                            100: '#FFEDD5',
+                            200: '#FED7AA',
+                            500: '#FF8C1A',
+                            600: '#EA580C',
+                            700: '#C2410C',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #FFFBF5 0%, #FFF3E0 50%, #FFFFFF 100%);
+            min-height: 100vh;
+            color: #1E293B;
+            overflow-x: hidden;
+        }
+
+        /* Глянцевый эффект Frutiger Aero / Scratch */
+        .aero-gloss {
+            background: linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(255,247,237,0.88) 100%);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px -5px rgba(249, 115, 22, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        /* Темы Грамоты */
+        .diploma-theme-kz {
+            background: radial-gradient(circle at top right, #FFFBEB, #FFFFFF 60%, #FEF3C7);
+            border: 10px double #D97706;
+        }
+        .diploma-theme-space {
+            background: radial-gradient(circle at top left, #EEF2FF, #FFFFFF 55%, #E0F2FE);
+            border: 10px double #2563EB;
+        }
+        .diploma-theme-gold {
+            background: linear-gradient(135deg, #FFFDF7 0%, #FEF9C3 50%, #FFFBEB 100%);
+            border: 10px double #CA8A04;
+        }
+
+        /* Плавающая анимация талисмана */
+        @keyframes floatCat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-7px) rotate(2deg); }
+        }
+        .cat-float {
+            animation: floatCat 3.5s ease-in-out infinite;
+        }
+
+        /* Стили печати: на лист А4 выводится ТОЛЬКО Грамота */
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #printable-diploma, #printable-diploma * {
+                visibility: visible !important;
+            }
+            #printable-diploma {
+                position: fixed !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                margin: 0 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                z-index: 99999 !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-orange-200 selection:text-orange-900">
+
+    <!-- ВЕРХНЯЯ ПАНЕЛЬ НАВИГАЦИИ -->
+    <header class="sticky top-0 z-40 aero-gloss border-b border-orange-200/80">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
+            <!-- Логотип с фирменным котом Scratch -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-orange-400 to-orange-600 p-1.5 shadow-md flex items-center justify-center border-2 border-white">
+                    <svg viewBox="0 0 120 120" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M24 44 L16 14 L46 28 Z" fill="#FF9800" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round"/>
+                        <path d="M96 44 L104 14 L74 28 Z" fill="#FF9800" stroke="#FFFFFF" stroke-width="6" stroke-linejoin="round"/>
+                        <ellipse cx="60" cy="66" rx="44" ry="38" fill="#FF9800" stroke="#FFFFFF" stroke-width="6"/>
+                        <ellipse cx="60" cy="76" rx="30" ry="22" fill="#FFFFFF"/>
+                        <ellipse cx="45" cy="56" rx="8" ry="10" fill="#FFFFFF"/>
+                        <ellipse cx="75" cy="56" rx="8" ry="10" fill="#FFFFFF"/>
+                        <circle cx="47" cy="56" r="4.5" fill="#1E293B"/>
+                        <circle cx="73" cy="56" r="4.5" fill="#1E293B"/>
+                        <ellipse cx="60" cy="69" rx="5" ry="3.5" fill="#EA580C"/>
+                        <path d="M48 78 Q60 88 72 78" stroke="#7C2D12" stroke-width="4.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 data-i18n="headerTitle" class="font-heading font-black text-base sm:text-lg text-slate-900 leading-tight">
+                        КиберАкадемия Юных Изобретателей
+                    </h1>
+                    <p data-i18n="headerSub" class="text-xs font-bold text-orange-600">
+                        Цифровая грамотность • 2 класс
+                    </p>
+                </div>
+            </div>
+
+            <!-- Панель управления: Язык, Звуки, Музыка Frutiger Aero -->
+            <div class="flex flex-wrap items-center gap-2">
+                <!-- Переключатель RU / KZ -->
+                <div class="flex items-center bg-orange-100/80 p-1 rounded-xl border border-orange-200">
+                    <button id="lang-ru" type="button" onclick="setLanguage('ru')" class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-white text-orange-600 shadow-sm transition">
+                        RU
+                    </button>
+                    <button id="lang-kz" type="button" onclick="setLanguage('kz')" class="px-2.5 py-1 rounded-lg text-xs font-extrabold text-slate-600 hover:text-slate-900 transition">
+                        KZ
+                    </button>
+                </div>
+
+                <!-- Кнопка звуковых эффектов -->
+                <button type="button" onclick="toggleSound()" class="px-3 py-2 rounded-xl bg-white border border-orange-200 hover:bg-orange-50 text-xs font-extrabold text-slate-700 flex items-center gap-1.5 shadow-sm transition">
+                    <i id="sound-icon" class="fa-solid fa-volume-high text-orange-500"></i>
+                    <span id="sound-label">Звук</span>
+                </button>
+
+                <!-- Селектор треков Frutiger Aero -->
+                <select id="music-track-select" onchange="changeMusicTrack(this.value)" aria-label="Мелодия" class="px-2.5 py-2 rounded-xl bg-white border border-orange-200 text-xs font-extrabold text-slate-700 shadow-sm focus:outline-none focus:border-orange-500">
+                    <option value="aqua">🌊 Aqua Breeze</option>
+                    <option value="sunny">☀️ Sunny Meadow</option>
+                    <option value="starlight">✨ Crystal Starlight</option>
+                </select>
+
+                <!-- Кнопка музыки -->
+                <button id="music-btn" type="button" onclick="toggleMusic()" class="px-3 py-2 rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm hover:opacity-95 transition">
+                    <i id="music-icon" class="fa-solid fa-music"></i>
+                    <span id="music-label" data-i18n="musicOff">Музыка: ВЫКЛ</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ГЛАВНЫЙ БАННЕР (HERO) -->
+    <main class="max-w-6xl mx-auto px-4 py-6 sm:py-8 space-y-8">
+        <section class="rounded-3xl bg-gradient-to-r from-orange-500 via-orange-500 to-amber-500 p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+            <div class="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="space-y-4 max-w-2xl">
+                    <span data-i18n="heroTag" class="inline-block px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-sm text-xs font-extrabold uppercase tracking-wider">
+                        Scratch Академия • 2 класс
+                    </span>
+                    <h2 data-i18n="heroTitle" class="font-heading font-black text-2xl sm:text-4xl leading-tight">
+                        Тайны устройств, кибербезопасности и спрайтов Scratch
+                    </h2>
+                    <p data-i18n="heroDesc" class="text-sm sm:text-base font-semibold text-orange-50 leading-relaxed">
+                        Изучи помощников компьютера, выбери спрайта и запрограммируй сложные алгоритмы в Scratch, пройди тест из 12 вопросов и получи именную Грамоту!
+                    </p>
+                    <!-- Быстрые кнопки навигации -->
+                    <div class="flex flex-wrap gap-2 pt-2">
+                        <button type="button" onclick="scrollToSection('sec-profile')" class="px-4 py-2 rounded-2xl bg-white text-orange-600 font-extrabold text-xs sm:text-sm shadow hover:bg-orange-50 transition">
+                            1. Визитка
+                        </button>
+                        <button type="button" onclick="scrollToSection('sec-devices')" class="px-4 py-2 rounded-2xl bg-orange-600/60 hover:bg-orange-600 text-white font-extrabold text-xs sm:text-sm border border-white/30 transition">
+                            2. Устройства
+                        </button>
+                        <button type="button" onclick="scrollToSection('sec-scratch')" class="px-4 py-2 rounded-2xl bg-orange-600/60 hover:bg-orange-600 text-white font-extrabold text-xs sm:text-sm border border-white/30 transition">
+                            5. Scratch
+                        </button>
+                        <button type="button" onclick="scrollToSection('sec-quiz')" class="px-4 py-2 rounded-2xl bg-orange-600/60 hover:bg-orange-600 text-white font-extrabold text-xs sm:text-sm border border-white/30 transition">
+                            6. Тест и Грамота
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Фирменный талисман Кот Скретч -->
+                <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-3xl bg-white/15 backdrop-blur-md border-2 border-white/40 p-4 flex items-center justify-center shadow-lg cat-float flex-shrink-0">
+                    <svg viewBox="0 0 140 150" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Хвост -->
+                        <path d="M35 120 Q10 105 18 85 Q24 72 34 86" stroke="#FF9800" stroke-width="12" stroke-linecap="round"/>
+                        <path d="M35 120 Q10 105 18 85 Q24 72 34 86" stroke="#7C2D12" stroke-width="4" stroke-linecap="round"/>
+                        <!-- Туловище -->
+                        <rect x="48" y="92" width="44" height="42" rx="18" fill="#FF9800" stroke="#7C2D12" stroke-width="4"/>
+                        <ellipse cx="70" cy="114" rx="13" ry="15" fill="#FFFFFF"/>
+                        <!-- Уши -->
+                        <path d="M34 50 L24 18 L56 34 Z" fill="#FF9800" stroke="#7C2D12" stroke-width="4" stroke-linejoin="round"/>
+                        <path d="M106 50 L116 18 L84 34 Z" fill="#FF9800" stroke="#7C2D12" stroke-width="4" stroke-linejoin="round"/>
+                        <!-- Голова -->
+                        <ellipse cx="70" cy="66" rx="44" ry="36" fill="#FF9800" stroke="#7C2D12" stroke-width="4"/>
+                        <ellipse cx="70" cy="76" rx="30" ry="20" fill="#FFFFFF"/>
+                        <!-- Глаза -->
+                        <ellipse cx="55" cy="57" rx="8" ry="10" fill="#FFFFFF" stroke="#7C2D12" stroke-width="3.5"/>
+                        <ellipse cx="85" cy="57" rx="8" ry="10" fill="#FFFFFF" stroke="#7C2D12" stroke-width="3.5"/>
+                        <circle cx="57" cy="57" r="4" fill="#1E293B"/>
+                        <circle cx="83" cy="57" r="4" fill="#1E293B"/>
+                        <!-- Нос и улыбка -->
+                        <ellipse cx="70" cy="69" rx="5" ry="3.5" fill="#EA580C"/>
+                        <path d="M58 78 Q70 88 82 78" stroke="#7C2D12" stroke-width="4" stroke-linecap="round"/>
+                        <!-- Усы -->
+                        <path d="M30 66 L12 62 M30 75 L11 78 M110 66 L128 62 M110 75 L129 78" stroke="#7C2D12" stroke-width="3.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 1: ВИЗИТКА УЧЕНИКА -->
+        <section id="sec-profile" class="rounded-3xl bg-white p-6 sm:p-8 border-2 border-orange-100 shadow-sm space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <h2 data-i18n="sec1Title" class="font-heading font-black text-xl sm:text-2xl text-slate-900">
+                    1. Визитка ученика
+                </h2>
+                <span data-i18n="sec1Hint" class="text-xs font-extrabold px-3 py-1 rounded-full bg-orange-100 text-orange-700">
+                    Заполни для оформления Грамоты
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                <!-- Имя и фамилия -->
+                <div class="space-y-2">
+                    <label for="student-name" data-i18n="labelName" class="block text-xs font-extrabold uppercase tracking-wider text-slate-600">
+                        Имя и Фамилия ученика
+                    </label>
+                    <input id="student-name" type="text" oninput="updateDiplomaPreview()" placeholder="Например: Алия Серикова" class="w-full px-4 py-3 rounded-2xl border-2 border-orange-200 focus:border-orange-500 focus:outline-none font-bold text-slate-900 bg-orange-50/30">
+                </div>
+
+                <!-- Класс -->
+                <div class="space-y-2">
+                    <label for="student-class" data-i18n="labelClass" class="block text-xs font-extrabold uppercase tracking-wider text-slate-600">
+                        Выбери свой класс
+                    </label>
+                    <select id="student-class" onchange="updateDiplomaPreview()" class="w-full px-4 py-3 rounded-2xl border-2 border-orange-200 focus:border-orange-500 focus:outline-none font-bold text-slate-900 bg-orange-50/30">
+                        <option value="2 «А»">2 «А»</option>
+                        <option value="2 «Б»">2 «Б»</option>
+                        <option value="2 «В»">2 «В»</option>
+                        <option value="2 «Г»">2 «Г»</option>
+                    </select>
+                </div>
+
+                <!-- Герой-помощник -->
+                <div class="space-y-2">
+                    <span data-i18n="labelAvatar" class="block text-xs font-extrabold uppercase tracking-wider text-slate-600">
+                        Выбери героя-помощника
+                    </span>
+                    <div class="grid grid-cols-4 gap-2">
+                        <button type="button" onclick="selectAvatar('scratchcat', this)" class="avatar-btn p-2 rounded-2xl border-2 border-brand-500 bg-brand-50 flex flex-col items-center justify-center gap-1 transition" title="Кот Скретч">
+                            <svg viewBox="0 0 120 120" class="w-7 h-7" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M24 44 L16 14 L46 28 Z" fill="#FF9800" stroke="#7C2D12" stroke-width="6"/>
+                                <path d="M96 44 L104 14 L74 28 Z" fill="#FF9800" stroke="#7C2D12" stroke-width="6"/>
+                                <ellipse cx="60" cy="66" rx="44" ry="38" fill="#FF9800" stroke="#7C2D12" stroke-width="6"/>
+                                <ellipse cx="60" cy="76" rx="30" ry="22" fill="#FFFFFF"/>
+                                <circle cx="47" cy="56" r="5" fill="#1E293B"/>
+                                <circle cx="73" cy="56" r="5" fill="#1E293B"/>
+                            </svg>
+                            <span data-i18n="avScratchCat" class="text-[10px] font-extrabold text-slate-700 truncate w-full text-center">Кот Скретч</span>
+                        </button>
+                        <button type="button" onclick="selectAvatar('robot', this)" class="avatar-btn p-2 rounded-2xl border-2 border-slate-200 bg-white flex flex-col items-center justify-center gap-1 transition">
+                            <span class="text-2xl">🤖</span>
+                            <span data-i18n="avRobot" class="text-[10px] font-extrabold text-slate-700 truncate w-full text-center">Робот</span>
+                        </button>
+                        <button type="button" onclick="selectAvatar('leopard', this)" class="avatar-btn p-2 rounded-2xl border-2 border-slate-200 bg-white flex flex-col items-center justify-center gap-1 transition">
+                            <span class="text-2xl">🐆</span>
+                            <span data-i18n="avLeopard" class="text-[10px] font-extrabold text-slate-700 truncate w-full text-center">Барс</span>
+                        </button>
+                        <button type="button" onclick="selectAvatar('owl', this)" class="avatar-btn p-2 rounded-2xl border-2 border-slate-200 bg-white flex flex-col items-center justify-center gap-1 transition">
+                            <span class="text-2xl">🦉</span>
+                            <span data-i18n="avOwl" class="text-[10px] font-extrabold text-slate-700 truncate w-full text-center">Совенок</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 2: УСТРОЙСТВА ВВОДА И ВЫВОДА -->
+        <section id="sec-devices" class="rounded-3xl bg-white p-6 sm:p-8 border-2 border-orange-100 shadow-sm space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <h2 data-i18n="sec2Title" class="font-heading font-black text-xl sm:text-2xl text-slate-900">
+                    2. Устройства ввода и вывода
+                </h2>
+                <div class="flex flex-wrap gap-2">
+                    <button id="filter-all" type="button" onclick="filterDevices('all')" data-i18n="filterAll" class="device-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-orange-500 text-white shadow transition">
+                        Все (10)
+                    </button>
+                    <button id="filter-input" type="button" onclick="filterDevices('input')" data-i18n="filterInput" class="device-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 transition">
+                        Ввод (6)
+                    </button>
+                    <button id="filter-output" type="button" onclick="filterDevices('output')" data-i18n="filterOutput" class="device-filter-btn px-3.5 py-1.5 rounded-xl text-xs font-extrabold bg-slate-100 text-slate-700 transition">
+                        Вывод (4)
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Сетка устройств -->
+                <div id="devices-grid" class="lg:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+
+                <!-- Карточка подробного описания выбранного устройства -->
+                <div class="rounded-3xl bg-gradient-to-br from-orange-50 to-amber-50 border-2 border-orange-200 p-5 flex flex-col justify-between space-y-4">
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span id="detail-icon" class="text-5xl">⌨️</span>
+                            <span id="detail-type-badge" data-i18n="detailBadge" class="text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-700">
+                                Устройство ВВОДА
+                            </span>
+                        </div>
+                        <h3 id="detail-title" data-i18n="detailTitle" class="font-heading font-black text-xl text-slate-900">
+                            Клавиатура
+                        </h3>
+                        <p id="detail-desc" data-i18n="detailDesc" class="text-sm font-semibold text-slate-700 leading-relaxed">
+                            Помогает вводить буквы, цифры и команды в компьютер нажатием клавиш.
+                        </p>
+                        <div class="p-3 rounded-2xl bg-white/90 border border-orange-200 space-y-1">
+                            <span data-i18n="detailExampleLabel" class="text-[11px] font-extrabold uppercase text-orange-600">
+                                Пример из жизни:
+                            </span>
+                            <p id="detail-example" data-i18n="detailExampleText" class="text-xs font-bold text-slate-700">
+                                Ты печатаешь своё имя в текстовом редакторе или управляешь героем стрелками.
+                            </p>
+                        </div>
+                    </div>
+
+                    <button type="button" onclick="speakSelectedDevice()" class="w-full py-3 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-sm shadow flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-volume-high"></i>
+                        <span data-i18n="speakDeviceBtn">Послушать вслух</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 3: ИГРА-СОРТИРОВЩИК -->
+        <section id="sec-sorter" class="rounded-3xl bg-white p-6 sm:p-8 border-2 border-orange-100 shadow-sm space-y-5">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h2 data-i18n="sec3Title" class="font-heading font-black text-xl sm:text-2xl text-slate-900">
+                        3. Игра-сортировщик: Разложи по корзинам
+                    </h2>
+                    <p data-i18n="sorterHint" class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">
+                        Перетащи карточку в нужную корзину или нажми на карточку, а затем на корзину!
+                    </p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="sorter-score" class="px-3.5 py-1.5 rounded-xl bg-orange-100 text-orange-800 font-extrabold text-sm">
+                        0 / 10
+                    </span>
+                    <button type="button" onclick="resetSorter()" class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-extrabold text-xs flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span data-i18n="resetBtn">Сбросить</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Пул карточек -->
+            <div id="sorter-pool" class="min-h-[72px] p-4 rounded-2xl bg-orange-50/50 border-2 border-dashed border-orange-200 flex flex-wrap gap-2.5 items-center justify-center"></div>
+
+            <!-- Две корзины -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Корзина ВВОДА -->
+                <div ondragover="handleDragOver(event)" ondrop="handleDrop(event, 'input')" onclick="placeSelectedInBasket('input')" class="cursor-pointer rounded-3xl p-5 bg-sky-50/70 border-2 border-sky-200 hover:border-sky-400 transition space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-sky-500 text-white flex items-center justify-center text-xl shadow-sm">
+                            <i class="fa-solid fa-arrow-right-to-bracket"></i>
+                        </div>
+                        <div>
+                            <h3 data-i18n="basketInputTitle" class="font-heading font-black text-lg text-sky-950">
+                                Устройства ВВОДА
+                            </h3>
+                            <p data-i18n="basketInputSub" class="text-xs font-bold text-sky-700">
+                                Передают информацию ОТ человека В компьютер
+                            </p>
+                        </div>
+                    </div>
+                    <div id="input-dropped-items" class="min-h-[60px] flex flex-wrap gap-2 pt-1"></div>
+                </div>
+
+                <!-- Корзина ВЫВОДА -->
+                <div ondragover="handleDragOver(event)" ondrop="handleDrop(event, 'output')" onclick="placeSelectedInBasket('output')" class="cursor-pointer rounded-3xl p-5 bg-emerald-50/70 border-2 border-emerald-200 hover:border-emerald-400 transition space-y-3">
+                    <div class="flex items-center gap-3">
+                        <div class="w-11 h-11 rounded-2xl bg-emerald-500 text-white flex items-center justify-center text-xl shadow-sm">
+                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                        </div>
+                        <div>
+                            <h3 data-i18n="basketOutputTitle" class="font-heading font-black text-lg text-emerald-950">
+                                Устройства ВЫВОДА
+                            </h3>
+                            <p data-i18n="basketOutputSub" class="text-xs font-bold text-emerald-700">
+                                Показывают или озвучивают информацию ИЗ компьютера
+                            </p>
+                        </div>
+                    </div>
+                    <div id="output-dropped-items" class="min-h-[60px] flex flex-wrap gap-2 pt-1"></div>
+                </div>
+            </div>
+
+            <div id="sorter-feedback" class="text-center font-extrabold text-sm min-h-[24px]"></div>
+        </section>
+
+        <!-- СЕКЦИЯ 4: БЕЗОПАСНОСТЬ И ГИГИЕНА -->
+        <section id="sec-safety" class="rounded-3xl bg-white p-6 sm:p-8 border-2 border-orange-100 shadow-sm space-y-5">
+            <div>
+                <h2 data-i18n="sec4Title" class="font-heading font-black text-xl sm:text-2xl text-slate-900">
+                    4. Тренажер «Можно или Нельзя?»
+                </h2>
+                <p data-i18n="sec4Sub" class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">
+                    Правила безопасности, гигиены и вежливости в сети
+                </p>
+            </div>
+            <div id="safety-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </section>
+
+        <!-- СЕКЦИЯ 5: МАСТЕРСКАЯ SCRATCH (СПРАЙТЫ И СЛОЖНЫЕ АЛГОРИТМЫ) -->
+        <section id="sec-scratch" class="rounded-3xl bg-white p-6 sm:p-8 border-2 border-orange-200 shadow-sm space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h2 data-i18n="secScratchTitle" class="font-heading font-black text-xl sm:text-2xl text-slate-900">
+                        5. Мастерская Scratch: Сложные алгоритмы
+                    </h2>
+                    <p data-i18n="secScratchSub" class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">
+                        Освой циклы, ветвления «Если — Иначе», координаты X/Y и переменные!
+                    </p>
+                </div>
+                <span data-i18n="spriteBadgeHint" class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-extrabold">
+                    Спрайт = персонаж-исполнитель
+                </span>
+            </div>
+
+            <!-- 4 карточки продвинутых концепций Scratch -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 space-y-1.5">
+                    <div class="text-2xl">🔁</div>
+                    <h3 data-i18n="scConceptLoopTitle" class="font-heading font-extrabold text-sm text-amber-950">Цикл «Повторить»</h3>
+                    <p data-i18n="scConceptLoopDesc" class="text-xs font-semibold text-amber-900/80">Выполняет команды внутри несколько раз подряд без повторения кода.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-orange-50 border border-orange-200 space-y-1.5">
+                    <div class="text-2xl">🔀</div>
+                    <h3 data-i18n="scConceptIfTitle" class="font-heading font-extrabold text-sm text-orange-950">Условие «Если — Иначе»</h3>
+                    <p data-i18n="scConceptIfDesc" class="text-xs font-semibold text-orange-900/80">Робот проверяет препятствие: если путь опасен — обходит, иначе — идёт прямо!</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-sky-50 border border-sky-200 space-y-1.5">
+                    <div class="text-2xl">🧭</div>
+                    <h3 data-i18n="scConceptCoordTitle" class="font-heading font-extrabold text-sm text-sky-950">Координаты X и Y</h3>
+                    <p data-i18n="scConceptCoordDesc" class="text-xs font-semibold text-sky-900/80">X двигает спрайт влево-вправо, а Y поднимает вверх и опускает вниз.</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-purple-50 border border-purple-200 space-y-1.5">
+                    <div class="text-2xl">🏆</div>
+                    <h3 data-i18n="scConceptVarTitle" class="font-heading font-extrabold text-sm text-purple-950">Переменные (Очки)</h3>
+                    <p data-i18n="scConceptVarDesc" class="text-xs font-semibold text-purple-900/80">Специальная коробочка памяти, которая считает собранные звёзды.</p>
+                </div>
+            </div>
+
+            <!-- Галерея Спрайтов Scratch -->
+            <div class="space-y-3">
+                <h3 data-i18n="spriteGalleryTitle" class="font-heading font-extrabold text-sm sm:text-base text-slate-800">
+                    Библиотека Спрайтов Scratch (нажми, чтобы выбрать героя для сцены):
+                </h3>
+                <div id="scratch-sprites-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3"></div>
+            </div>
+
+            <!-- Переключатель миссий Scratch -->
+            <div class="flex flex-wrap gap-2 pt-2">
+                <button type="button" onclick="loadScratchMission(0)" data-i18n="m0Title" class="scratch-mission-btn px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-extrabold bg-orange-500 text-white shadow transition">
+                    Миссия 1: Цикл и Звёзды
+                </button>
+                <button type="button" onclick="loadScratchMission(1)" data-i18n="m1Title" class="scratch-mission-btn px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-extrabold bg-orange-50 text-orange-800 hover:bg-orange-100 transition">
+                    Миссия 2: Условие «Если — Иначе»
+                </button>
+                <button type="button" onclick="loadScratchMission(2)" data-i18n="m2Title" class="scratch-mission-btn px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-extrabold bg-orange-50 text-orange-800 hover:bg-orange-100 transition">
+                    Миссия 3: Координаты X / Y
+                </button>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-orange-50 border border-orange-200 font-bold text-xs sm:text-sm text-orange-950" id="scratch-mission-goal"></div>
+
+            <!-- Интерактивная среда Scratch: Палитра | Скрипт | Сцена -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <!-- Палитра блоков -->
+                <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200 space-y-3">
+                    <h4 data-i18n="scPaletteTitle" class="font-heading font-extrabold text-xs uppercase tracking-wider text-slate-600">
+                        Палитра блоков Scratch (нажми на блок):
+                    </h4>
+                    <div id="scratch-palette" class="space-y-2"></div>
+                </div>
+
+                <!-- Рабочая область скрипта -->
+                <div class="p-4 rounded-2xl bg-slate-50 border-2 border-slate-200 flex flex-col justify-between space-y-3">
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between">
+                            <h4 data-i18n="scScriptTitle" class="font-heading font-extrabold text-xs uppercase tracking-wider text-slate-600">
+                                Скрипт спрайта:
+                            </h4>
+                            <button type="button" onclick="clearScratchWorkspace()" data-i18n="scClearBtn" class="text-xs font-extrabold text-rose-600 hover:underline">
+                                Очистить
+                            </button>
+                        </div>
+                        <div id="scratch-workspace" class="min-h-[140px] p-3 rounded-xl bg-white border border-slate-200 space-y-1.5"></div>
+                    </div>
+
+                    <button type="button" onclick="runScratchProgram()" data-i18n="scRunBtn" class="w-full py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold text-sm shadow transition">
+                        Запустить ⚑
+                    </button>
+                </div>
+
+                <!-- Игровая сцена Scratch -->
+                <div class="p-4 rounded-2xl bg-orange-50/70 border-2 border-orange-200 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <h4 data-i18n="scStageTitle" class="font-heading font-extrabold text-xs uppercase tracking-wider text-orange-800">
+                            Сцена Scratch (160×160):
+                        </h4>
+                        <div class="flex items-center gap-2 text-xs font-extrabold">
+                            <span class="px-2 py-0.5 rounded bg-white text-slate-700 border border-orange-200">X: <span id="sc-x">0</span></span>
+                            <span class="px-2 py-0.5 rounded bg-white text-slate-700 border border-orange-200">Y: <span id="sc-y">0</span></span>
+                            <span class="px-2 py-0.5 rounded bg-orange-500 text-white">⭐ <span id="sc-score">0</span></span>
+                        </div>
+                    </div>
+                    <div id="scratch-stage-grid" class="grid grid-cols-4 gap-1.5 aspect-square bg-orange-100/60 p-2 rounded-2xl border border-orange-200"></div>
+                    <div id="scratch-status" class="text-xs font-extrabold text-center min-h-[20px]"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 6: ИТОГОВЫЙ ТЕСТ (12 ВОПРОСОВ) -->
+        <section id="sec-quiz" class="rounded-3xl bg-white p-6 sm:p-8 border-2 border-orange-100 shadow-sm space-y-6">
+            <div>
+                <h2 data-i18n="sec5Title" class="font-heading font-black text-xl sm:text-2xl text-slate-900">
+                    6. Итоговый тест: 12 вопросов
+                </h2>
+                <p data-i18n="sec5Sub" class="text-xs sm:text-sm font-semibold text-slate-600 mt-1">
+                    Набери от 8 баллов (70%), чтобы открыть персональную Грамоту!
+                </p>
+            </div>
+
+            <div id="quiz-container" class="space-y-4"></div>
+
+            <div class="pt-2 flex flex-col items-center gap-4">
+                <button type="button" onclick="submitQuiz()" class="px-8 py-4 rounded-2xl bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white font-heading font-black text-base sm:text-lg shadow-lg transition transform hover:scale-[1.02]">
+                    <i class="fa-solid fa-award mr-2"></i>
+                    <span data-i18n="checkQuizBtn">Проверить тест и получить Грамоту</span>
+                </button>
+                <div id="quiz-result-box" class="hidden w-full"></div>
+            </div>
+        </section>
+
+        <!-- СЕКЦИЯ 7: ПЕРСОНАЛЬНАЯ ГРАМОТА (А4) -->
+        <section id="sec-diploma" class="hidden rounded-3xl bg-white p-6 sm:p-8 border-2 border-orange-200 shadow-md space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <h2 data-i18n="sec6Title" class="font-heading font-black text-xl sm:text-2xl text-slate-900">
+                    7. Твоя персональная Грамота
+                </h2>
+                <div class="flex flex-wrap items-center gap-2">
+                    <button type="button" onclick="setDiplomaTheme('kz')" data-i18n="themeKz" class="px-3 py-1.5 rounded-xl bg-amber-100 text-amber-900 font-extrabold text-xs hover:bg-amber-200 transition">
+                        Казахстанский орнамент
+                    </button>
+                    <button type="button" onclick="setDiplomaTheme('space')" data-i18n="themeSpace" class="px-3 py-1.5 rounded-xl bg-sky-100 text-sky-900 font-extrabold text-xs hover:bg-sky-200 transition">
+                        Космос
+                    </button>
+                    <button type="button" onclick="setDiplomaTheme('gold')" data-i18n="themeGold" class="px-3 py-1.5 rounded-xl bg-yellow-100 text-yellow-900 font-extrabold text-xs hover:bg-yellow-200 transition">
+                        Золотая
+                    </button>
+                    <button type="button" onclick="window.print()" class="px-4 py-2 rounded-xl bg-orange-600 hover:bg-orange-700 text-white font-extrabold text-xs sm:text-sm shadow flex items-center gap-2 transition">
+                        <i class="fa-solid fa-print"></i>
+                        <span data-i18n="printBtn">Распечатать / Сохранить в PDF</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Бланк Грамоты -->
+            <div id="printable-diploma" class="diploma-theme-kz rounded-3xl p-8 sm:p-12 text-center space-y-6 shadow-xl relative overflow-hidden">
+                <div class="flex items-center justify-center gap-3">
+                    <span class="text-3xl">🇰🇿</span>
+                    <span data-i18n="dipTopOrg" class="text-xs sm:text-sm font-extrabold uppercase tracking-widest text-amber-800">
+                        Цифровая грамотность • Начальная школа
+                    </span>
+                    <span class="text-3xl">🎓</span>
+                </div>
+
+                <h3 data-i18n="dipMainTitle" class="font-heading font-black text-4xl sm:text-6xl tracking-wider text-orange-600 drop-shadow-sm">
+                    ГРАМОТА
+                </h3>
+
+                <div class="space-y-2">
+                    <p data-i18n="dipAwardedTo" class="text-sm sm:text-base font-bold text-slate-600 uppercase tracking-wider">
+                        Награждается ученик(ца)
+                    </p>
+                    <div id="dip-student-name" class="font-heading font-black text-2xl sm:text-4xl text-slate-900 border-b-2 border-dashed border-amber-400 inline-block px-8 pb-1">
+                        Ученик 2 класса
+                    </div>
+                    <div id="dip-student-class" class="text-base sm:text-lg font-extrabold text-orange-700">
+                        2 «А» класса
+                    </div>
+                </div>
+
+                <div class="flex justify-center">
+                    <div id="dip-avatar-badge" class="w-20 h-20 rounded-full bg-white border-4 border-amber-400 shadow-md flex items-center justify-center text-4xl"></div>
+                </div>
+
+                <p data-i18n="dipBodyText" class="max-w-2xl mx-auto text-sm sm:text-lg font-bold text-slate-700 leading-relaxed">
+                    за отличные знания устройств компьютера, правил кибербезопасности и программирования сложных алгоритмов в среде Scratch!
+                </p>
+
+                <div class="grid grid-cols-3 gap-4 pt-6 border-t border-amber-300/80 text-xs sm:text-sm font-extrabold text-slate-700">
+                    <div>
+                        <div data-i18n="dipScoreLabel" class="text-slate-400 uppercase text-[10px]">Результат теста</div>
+                        <div id="dip-score" class="text-base sm:text-lg text-emerald-700 mt-1">12/12 (100%)</div>
+                    </div>
+                    <div>
+                        <div data-i18n="dipDateLabel" class="text-slate-400 uppercase text-[10px]">Дата</div>
+                        <div id="dip-date" class="text-base sm:text-lg text-slate-800 mt-1">19.11.2026</div>
+                    </div>
+                    <div>
+                        <div data-i18n="dipSignLabel" class="text-slate-400 uppercase text-[10px]">Подпись учителя</div>
+                        <div class="mt-3 border-b border-slate-400 w-28 mx-auto"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ПОДВАЛ -->
+    <footer class="mt-12 py-6 border-t border-orange-200/70 text-center text-xs font-bold text-slate-500">
+        <p data-i18n="footerText">КиберАкадемия Юных Изобретателей • Цифровая грамотность, 2 класс</p>
+    </footer>
+
+    <!-- ВСТРОЕННЫЙ СКРИПТ (АУДИО, ПЕРЕВОД, ИНТЕРАКТИВ, ИГРЫ, SCRATCH, ТЕСТ И ГРАМОТА) -->
+    <script>
+        // ==================== 1. УТИЛИТЫ И НАВИГАЦИЯ ====================
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        // ==================== 2. ЗВУКОВОЙ ДВИЖОК (WEB AUDIO API) & МУЗЫКА FRUTIGER AERO ====================
+        let audioCtx = null;
+        let soundEnabled = true;
+        let musicEnabled = false;
+        let currentTrack = 'aqua';
+        let musicSchedulerTimer = null;
+        let nextNoteTime = 0;
+        let stepIndex = 0;
+        let masterMusicGain = null;
+
+        function initAudio() {
+            if (!audioCtx) {
+                const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                if (AudioContextClass) {
+                    audioCtx = new AudioContextClass();
+                }
+            }
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+
+        function playSound(type) {
+            if (!soundEnabled) return;
+            initAudio();
+            if (!audioCtx) return;
+
+            const now = audioCtx.currentTime;
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            if (type === 'click') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(520, now);
+                osc.frequency.exponentialRampToValueAtTime(780, now + 0.08);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+                osc.start(now);
+                osc.stop(now + 0.09);
+            } else if (type === 'success') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(523.25, now);
+                osc.frequency.setValueAtTime(659.25, now + 0.09);
+                osc.frequency.setValueAtTime(783.99, now + 0.18);
+                gain.gain.setValueAtTime(0.16, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+                osc.start(now);
+                osc.stop(now + 0.36);
+            } else if (type === 'error') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.linearRampToValueAtTime(165, now + 0.22);
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.24);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            } else if (type === 'win') {
+                const notes = [523.25, 659.25, 783.99, 1046.5];
+                notes.forEach((freq, idx) => {
+                    const o = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    o.type = 'triangle';
+                    o.connect(g);
+                    g.connect(audioCtx.destination);
+                    o.frequency.setValueAtTime(freq, now + idx * 0.11);
+                    g.gain.setValueAtTime(0.16, now + idx * 0.11);
+                    g.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.11 + 0.45);
+                    o.start(now + idx * 0.11);
+                    o.stop(now + idx * 0.11 + 0.46);
+                });
+            }
+        }
+
+        function toggleSound() {
+            soundEnabled = !soundEnabled;
+            const icon = document.getElementById('sound-icon');
+            const label = document.getElementById('sound-label');
+            if (icon) {
+                icon.className = soundEnabled ? 'fa-solid fa-volume-high text-orange-500' : 'fa-solid fa-volume-xmark text-slate-400';
+            }
+            if (label) {
+                label.innerText = soundEnabled ? (currentLang === 'ru' ? 'Звук' : 'Дыбыс') : (currentLang === 'ru' ? 'Без зв.' : 'Үнсіз');
+            }
+            if (soundEnabled) playSound('click');
+        }
+
+        const aeroTracks = {
+            aqua: {
+                bpm: 92,
+                chords: [
+                    [349.23, 440.00, 523.25, 659.25],
+                    [329.63, 392.00, 493.88, 587.33],
+                    [293.66, 349.23, 440.00, 523.25],
+                    [261.63, 329.63, 392.00, 493.88]
+                ],
+                arp: [523.25, 659.25, 783.99, 987.77, 783.99, 659.25, 587.33, 493.88]
+            },
+            sunny: {
+                bpm: 106,
+                chords: [
+                    [261.63, 329.63, 392.00, 493.88],
+                    [392.00, 493.88, 587.33, 659.25],
+                    [440.00, 523.25, 659.25, 783.99],
+                    [349.23, 440.00, 523.25, 659.25]
+                ],
+                arp: [523.25, 783.99, 987.77, 1046.5, 987.77, 783.99, 659.25, 523.25]
+            },
+            starlight: {
+                bpm: 78,
+                chords: [
+                    [220.00, 261.63, 329.63, 392.00],
+                    [349.23, 440.00, 523.25, 659.25],
+                    [261.63, 329.63, 392.00, 493.88],
+                    [392.00, 493.88, 587.33, 659.25]
+                ],
+                arp: [659.25, 783.99, 987.77, 1174.66, 987.77, 783.99, 659.25, 493.88]
+            }
+        };
+
+        function scheduleAeroStep(step, time) {
+            if (!audioCtx || !masterMusicGain) return;
+            const track = aeroTracks[currentTrack] || aeroTracks.aqua;
+            const eighthDuration = 60 / track.bpm / 2;
+
+            if (step % 8 === 0) {
+                const chordIdx = Math.floor(step / 8) % track.chords.length;
+                const chord = track.chords[chordIdx];
+                chord.forEach(freq => {
+                    const osc = audioCtx.createOscillator();
+                    const g = audioCtx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(freq, time);
+                    g.gain.setValueAtTime(0.0001, time);
+                    g.gain.linearRampToValueAtTime(0.025, time + 0.35);
+                    g.gain.exponentialRampToValueAtTime(0.0001, time + eighthDuration * 7.8);
+                    osc.connect(g);
+                    g.connect(masterMusicGain);
+                    osc.start(time);
+                    osc.stop(time + eighthDuration * 8);
+                });
+            }
+
+            const arpFreq = track.arp[step % track.arp.length];
+            const arpOsc = audioCtx.createOscillator();
+            const arpGain = audioCtx.createGain();
+            arpOsc.type = 'triangle';
+            arpOsc.frequency.setValueAtTime(arpFreq, time);
+            arpGain.gain.setValueAtTime(0.0001, time);
+            arpGain.gain.linearRampToValueAtTime(0.035, time + 0.02);
+            arpGain.gain.exponentialRampToValueAtTime(0.0001, time + eighthDuration * 0.95);
+            arpOsc.connect(arpGain);
+            arpGain.connect(masterMusicGain);
+            arpOsc.start(time);
+            arpOsc.stop(time + eighthDuration);
+        }
+
+        function aeroSchedulerLoop() {
+            if (!musicEnabled || !audioCtx) return;
+            const track = aeroTracks[currentTrack] || aeroTracks.aqua;
+            const eighthDuration = 60 / track.bpm / 2;
+
+            while (nextNoteTime < audioCtx.currentTime + 0.12) {
+                scheduleAeroStep(stepIndex, nextNoteTime);
+                nextNoteTime += eighthDuration;
+                stepIndex++;
+            }
+        }
+
+        function startAeroMusic() {
+            initAudio();
+            if (!audioCtx) return;
+            stopAeroMusic();
+
+            masterMusicGain = audioCtx.createGain();
+            masterMusicGain.gain.setValueAtTime(0.55, audioCtx.currentTime);
+            masterMusicGain.connect(audioCtx.destination);
+
+            stepIndex = 0;
+            nextNoteTime = audioCtx.currentTime + 0.05;
+            musicSchedulerTimer = setInterval(aeroSchedulerLoop, 30);
+        }
+
+        function stopAeroMusic() {
+            if (musicSchedulerTimer) {
+                clearInterval(musicSchedulerTimer);
+                musicSchedulerTimer = null;
+            }
+            if (masterMusicGain && audioCtx) {
+                try {
+                    masterMusicGain.gain.setTargetAtTime(0.0001, audioCtx.currentTime, 0.05);
+                } catch (e) {}
+            }
+        }
+
+        function toggleMusic() {
+            musicEnabled = !musicEnabled;
+            const btn = document.getElementById('music-btn');
+            const icon = document.getElementById('music-icon');
+            const label = document.getElementById('music-label');
+
+            if (musicEnabled) {
+                startAeroMusic();
+                if (btn) btn.classList.add('ring-2', 'ring-orange-400');
+                if (icon) icon.classList.add('animate-bounce');
+                if (label) label.innerText = currentLang === 'ru' ? 'Музыка: ВКЛ' : 'Музыка: ҚОСУЛЫ';
+            } else {
+                stopAeroMusic();
+                if (btn) btn.classList.remove('ring-2', 'ring-orange-400');
+                if (icon) icon.classList.remove('animate-bounce');
+                if (label) label.innerText = currentLang === 'ru' ? 'Музыка: ВЫКЛ' : 'Музыка: ӨШІРУЛІ';
+            }
+        }
+
+        function changeMusicTrack(trackKey) {
+            currentTrack = trackKey;
+            if (musicEnabled) {
+                startAeroMusic();
+            }
+        }
+
+        function speakText(text) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = currentLang === 'kz' ? 'kk-KZ' : 'ru-RU';
+            utter.rate = 0.95;
+            window.speechSynthesis.speak(utter);
+        }
+
+        // ==================== 3. ДВУЯЗЫЧНЫЙ СЛОВАРЬ (RU / KZ) ====================
+        let currentLang = 'ru';
+
+        const translations = {
+            ru: {
+                headerTitle: "КиберАкадемия Юных Изобретателей",
+                headerSub: "Цифровая грамотность • 2 класс",
+                musicOff: "Музыка: ВЫКЛ",
+                heroTag: "Scratch Академия • 2 класс",
+                heroTitle: "Тайны устройств, кибербезопасности и спрайтов Scratch",
+                heroDesc: "Изучи помощников компьютера, выбери спрайта и запрограммируй сложные алгоритмы в Scratch, пройди тест из 12 вопросов и получи именную Грамоту!",
+                sec1Title: "1. Визитка ученика",
+                sec1Hint: "Заполни для оформления Грамоты",
+                labelName: "Имя и Фамилия ученика",
+                labelClass: "Выбери свой класс",
+                labelAvatar: "Выбери героя-помощника",
+                avScratchCat: "Кот Скретч",
+                avRobot: "Робот",
+                avLeopard: "Барс",
+                avOwl: "Совенок",
+                sec2Title: "2. Устройства ввода и вывода",
+                filterAll: "Все (10)",
+                filterInput: "Ввод (6)",
+                filterOutput: "Вывод (4)",
+                detailBadge: "Устройство ВВОДА",
+                detailTitle: "Клавиатура",
+                detailDesc: "Помогает вводить буквы, цифры и команды в компьютер нажатием клавиш.",
+                detailExampleLabel: "Пример из жизни:",
+                detailExampleText: "Ты печатаешь своё имя в текстовом редакторе или управляешь героем стрелками.",
+                speakDeviceBtn: "Послушать вслух",
+                sec3Title: "3. Игра-сортировщик: Разложи по корзинам",
+                resetBtn: "Сбросить",
+                sorterHint: "Перетащи карточку в нужную корзину или нажми на карточку, а затем на корзину!",
+                basketInputTitle: "Устройства ВВОДА",
+                basketInputSub: "Передают информацию ОТ человека В компьютер",
+                basketOutputTitle: "Устройства ВЫВОДА",
+                basketOutputSub: "Показывают или озвучивают информацию ИЗ компьютера",
+                sec4Title: "4. Тренажер «Можно или Нельзя?»",
+                sec4Sub: "Правила безопасности, гигиены и вежливости в сети",
+                secScratchTitle: "5. Мастерская Scratch: Сложные алгоритмы",
+                secScratchSub: "Освой циклы, ветвления «Если — Иначе», координаты X/Y и переменные!",
+                m0Title: "Миссия 1: Цикл и Звёзды",
+                m1Title: "Миссия 2: Условие «Если — Иначе»",
+                m2Title: "Миссия 3: Координаты X / Y",
+                spriteGalleryTitle: "Библиотека Спрайтов Scratch (нажми, чтобы выбрать героя для сцены):",
+                spriteBadgeHint: "Спрайт = персонаж-исполнитель",
+                scConceptLoopTitle: "Цикл «Повторить»",
+                scConceptLoopDesc: "Выполняет команды внутри несколько раз подряд без повторения кода.",
+                scConceptIfTitle: "Условие «Если — Иначе»",
+                scConceptIfDesc: "Робот проверяет препятствие: если путь опасен — обходит, иначе — идёт прямо!",
+                scConceptCoordTitle: "Координаты X и Y",
+                scConceptCoordDesc: "X двигает спрайт влево-вправо, а Y поднимает вверх и опускает вниз.",
+                scConceptVarTitle: "Переменные (Очки)",
+                scConceptVarDesc: "Специальная коробочка памяти, которая считает собранные звёзды.",
+                scPaletteTitle: "Палитра блоков Scratch (нажми на блок):",
+                scScriptTitle: "Скрипт спрайта:",
+                scClearBtn: "Очистить",
+                scRunBtn: "Запустить ⚑",
+                scStageTitle: "Сцена Scratch (160×160):",
+                sec5Title: "6. Итоговый тест: 12 вопросов",
+                sec5Sub: "Набери от 8 баллов (70%), чтобы открыть персональную Грамоту!",
+                checkQuizBtn: "Проверить тест и получить Грамоту",
+                sec6Title: "7. Твоя персональная Грамота",
+                themeKz: "Казахстанский орнамент",
+                themeSpace: "Космос",
+                themeGold: "Золотая",
+                printBtn: "Распечатать / Сохранить в PDF",
+                dipTopOrg: "Цифровая грамотность • Начальная школа",
+                dipMainTitle: "ГРАМОТА",
+                dipAwardedTo: "Награждается ученик(ца)",
+                dipClassSuffix: "класса",
+                dipBodyText: "за отличные знания устройств компьютера, правил кибербезопасности и программирования сложных алгоритмов в среде Scratch!",
+                dipScoreLabel: "Результат теста",
+                dipDateLabel: "Дата",
+                dipSignLabel: "Подпись учителя",
+                footerText: "КиберАкадемия Юных Изобретателей • Цифровая грамотность, 2 класс"
+            },
+            kz: {
+                headerTitle: "Жас Өнертапқыштар КиберАкадемиясы",
+                headerSub: "Цифрлық сауаттылық • 2-сынып",
+                musicOff: "Музыка: ӨШІРУЛІ",
+                heroTag: "Scratch Академиясы • 2-сынып",
+                heroTitle: "Құрылғылар құпиясы, киберқауіпсіздік және Scratch спрайттары",
+                heroDesc: "Компьютер көмекшілерін зертте, спрайт таңдап Scratch-те күрделі алгоритмдер құр, 12 сұрақтық тесттен өтіп атаулы Мақтау қағазын ал!",
+                sec1Title: "1. Оқушының визиткасы",
+                sec1Hint: "Мақтау қағазын толтыру үшін жаз",
+                labelName: "Оқушының аты-жөні",
+                labelClass: "Сыныбыңды таңда",
+                labelAvatar: "Көмекші кейіпкерді таңда",
+                avScratchCat: "Скретч Мысық",
+                avRobot: "Робот",
+                avLeopard: "Барыс",
+                avOwl: "Үкі",
+                sec2Title: "2. Енгізу және шығару құрылғылары",
+                filterAll: "Барлығы (10)",
+                filterInput: "Енгізу (6)",
+                filterOutput: "Шығару (4)",
+                detailBadge: "ЕНГІЗУ құрылғысы",
+                detailTitle: "Пернетақта",
+                detailDesc: "Пернелерді басу арқылы компьютерге әріптер, сандар және командалар енгізуге көмектеседі.",
+                detailExampleLabel: "Өмірден мысал:",
+                detailExampleText: "Сен мәтіндік редакторда өз атыңды тересің немесе көрсеткілермен кейіпкерді басқарасың.",
+                speakDeviceBtn: "Дауыстап тыңдау",
+                sec3Title: "3. Сұрыптау ойыны: Себеттерге бөл",
+                resetBtn: "Қайта бастау",
+                sorterHint: "Карточканы тиісті себетке сүйреп апар немесе алдымен карточканы, сосын себетті бас!",
+                basketInputTitle: "ЕНГІЗУ құрылғылары",
+                basketInputSub: "Ақпаратты адамнан компьютерге береді",
+                basketOutputTitle: "ШЫҒАРУ құрылғылары",
+                basketOutputSub: "Ақпаратты компьютерден көрсетеді немесе дыбыстайды",
+                sec4Title: "4. «Болады ма, болмайды ма?» жаттықтырғышы",
+                sec4Sub: "Желідегі қауіпсіздік, гигиена және әдептілік ережелері",
+                secScratchTitle: "5. Scratch шеберханасы: Күрделі алгоритмдер",
+                secScratchSub: "Циклдарды, «Егер — Әйтпесе» тармақталуын, X/Y координаталарын және айнымалыларды меңгер!",
+                m0Title: "1-миссия: Цикл және Жұлдыздар",
+                m1Title: "2-миссия: «Егер — Әйтпесе» шарты",
+                m2Title: "3-миссия: X / Y координаталары",
+                spriteGalleryTitle: "Scratch Спрайттар кітапханасы (сахнаға кейіпкер таңдау үшін бас):",
+                spriteBadgeHint: "Спрайт = орындаушы кейіпкер",
+                scConceptLoopTitle: "«Қайталау» циклі",
+                scConceptLoopDesc: "Ішіндегі командаларды кодты қайталамай-ақ бірнеше рет орындайды.",
+                scConceptIfTitle: "«Егер — Әйтпесе» шарты",
+                scConceptIfDesc: "Робот кедергіні тексереді: жол қауіпті болса — айналып өтеді, әйтпесе — тура жүреді!",
+                scConceptCoordTitle: "X және Y координаталары",
+                scConceptCoordDesc: "X спрайтты солға-оңға жылжытады, ал Y жоғары-төмен қозғалтады.",
+                scConceptVarTitle: "Айнымалылар (Ұпай)",
+                scConceptVarDesc: "Жиналған жұлдыздарды санайтын арнайы жад қорапшасы.",
+                scPaletteTitle: "Scratch блоктар палитрасы (блокты бас):",
+                scScriptTitle: "Спрайт скрипті:",
+                scClearBtn: "Тазалау",
+                scRunBtn: "Іске қосу ⚑",
+                scStageTitle: "Scratch сахнасы (160×160):",
+                sec5Title: "6. Қорытынды тест: 12 сұрақ",
+                sec5Sub: "Жеке Мақтау қағазын алу үшін 8 балдан (70%) жоғары жина!",
+                checkQuizBtn: "Тестті тексеру және Мақтау қағазын алу",
+                sec6Title: "7. Сенің жеке Мақтау қағазың",
+                themeKz: "Қазақ ою-өрнегі",
+                themeSpace: "Ғарыш",
+                themeGold: "Алтын",
+                printBtn: "Басып шығару / PDF сақтау",
+                dipTopOrg: "Цифрлық сауаттылық • Бастауыш мектеп",
+                dipMainTitle: "МАҚТАУ ҚАҒАЗЫ",
+                dipAwardedTo: "Марапатталады",
+                dipClassSuffix: "сынып оқушысы",
+                dipBodyText: "компьютер құрылғыларын, киберқауіпсіздік ережелерін және Scratch ортасында күрделі алгоритмдер құруды үздік меңгергені үшін!",
+                dipScoreLabel: "Тест нәтижесі",
+                dipDateLabel: "Күні",
+                dipSignLabel: "Мұғалімнің қолы",
+                footerText: "Жас Өнертапқыштар КиберАкадемиясы • Цифрлық сауаттылық, 2-сынып"
+            }
+        };
+
+        function setLanguage(lang) {
+            currentLang = lang;
+            playSound('click');
+
+            const btnRu = document.getElementById('lang-ru');
+            const btnKz = document.getElementById('lang-kz');
+            if (btnRu && btnKz) {
+                if (lang === 'ru') {
+                    btnRu.className = 'px-2.5 py-1 rounded-lg text-xs font-extrabold bg-white text-orange-600 shadow-sm transition';
+                    btnKz.className = 'px-2.5 py-1 rounded-lg text-xs font-extrabold text-slate-600 hover:text-slate-900 transition';
+                } else {
+                    btnKz.className = 'px-2.5 py-1 rounded-lg text-xs font-extrabold bg-white text-orange-600 shadow-sm transition';
+                    btnRu.className = 'px-2.5 py-1 rounded-lg text-xs font-extrabold text-slate-600 hover:text-slate-900 transition';
+                }
+            }
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.innerText = translations[lang][key];
+                }
+            });
+
+            const nameInput = document.getElementById('student-name');
+            if (nameInput) {
+                nameInput.placeholder = lang === 'ru' ? 'Например: Алия Серикова' : 'Мысалы: Әлия Серікова';
+            }
+
+            renderDevicesGrid();
+            renderSorterPool();
+            renderSafetyCards();
+            renderScratchSpritesGallery();
+            loadScratchMission(currentScratchMissionIdx);
+            renderQuiz();
+            updateDiplomaPreview();
+        }
+
+        // ==================== 4. БАЗА УСТРОЙСТВ ВВОДА И ВЫВОДА ====================
+        const devicesDB = [
+            {
+                id: 'keyboard',
+                type: 'input',
+                emoji: '⌨️',
+                ru: {
+                    name: 'Клавиатура',
+                    badge: 'Устройство ВВОДА',
+                    desc: 'Помогает вводить буквы, цифры и команды в компьютер нажатием клавиш.',
+                    example: 'Ты печатаешь своё имя в текстовом редакторе или управляешь героем стрелками.'
+                },
+                kz: {
+                    name: 'Пернетақта',
+                    badge: 'ЕНГІЗУ құрылғысы',
+                    desc: 'Пернелерді басу арқылы компьютерге әріптер, сандар және командалар енгізуге көмектеседі.',
+                    example: 'Сен мәтіндік редакторда өз атыңды тересің немесе көрсеткілермен кейіпкерді басқарасың.'
+                }
+            },
+            {
+                id: 'mouse',
+                type: 'input',
+                emoji: '🖱️',
+                ru: {
+                    name: 'Компьютерная мышь',
+                    badge: 'Устройство ВВОДА',
+                    desc: 'Передаёт движения твоей руки курсору на экране, помогает выбирать и рисовать.',
+                    example: 'Ты выбираешь кисточку в Paint и рисуешь солнышко.'
+                },
+                kz: {
+                    name: 'Компьютерлік тінтуір',
+                    badge: 'ЕНГІЗУ құрылғысы',
+                    desc: 'Қолыңның қозғалысын экрандағы курсорға жеткізеді, таңдауға және сурет салуға көмектеседі.',
+                    example: 'Сен Paint бағдарламасында қылқаламды таңдап, күннің суретін саласың.'
+                }
+            },
+            {
+                id: 'mic',
+                type: 'input',
+                emoji: '🎙️',
+                ru: {
+                    name: 'Микрофон',
+                    badge: 'Устройство ВВОДА',
+                    desc: 'Превращает твой голос и звуки в цифровой сигнал для компьютера.',
+                    example: 'Ты записываешь голосовое сообщение или общаешься на онлайн-уроке.'
+                },
+                kz: {
+                    name: 'Микрофон',
+                    badge: 'ЕНГІЗУ құрылғысы',
+                    desc: 'Сенің дауысың мен дыбыстарды компьютер үшін цифрлық сигналға айналдырады.',
+                    example: 'Сен дыбыстық хабарлама жазасың немесе онлайн сабақта сөйлейсің.'
+                }
+            },
+            {
+                id: 'scanner',
+                type: 'input',
+                emoji: '📠',
+                ru: {
+                    name: 'Сканер',
+                    badge: 'Устройство ВВОДА',
+                    desc: 'Фотографирует бумажный рисунок или документ и переносит его в память компьютера.',
+                    example: 'Ты нарисовал рисунок карандашами на бумаге, а сканер перенёс его на экран.'
+                },
+                kz: {
+                    name: 'Сканер',
+                    badge: 'ЕНГІЗУ құрылғысы',
+                    desc: 'Қағаздағы суретті немесе құжатты суретке түсіріп, компьютер жадына көшіреді.',
+                    example: 'Сен қағазға қарындашпен сурет салдың, ал сканер оны экранға көшірді.'
+                }
+            },
+            {
+                id: 'webcam',
+                type: 'input',
+                emoji: '📷',
+                ru: {
+                    name: 'Веб-камера',
+                    badge: 'Устройство ВВОДА',
+                    desc: 'Снимает видео и передаёт твоё изображение в компьютер.',
+                    example: 'Учитель и одноклассники видят тебя во время видеозвонка.'
+                },
+                kz: {
+                    name: 'Веб-камера',
+                    badge: 'ЕНГІЗУ құрылғысы',
+                    desc: 'Бейне түсіріп, сенің бейнеңді компьютерге жібереді.',
+                    example: 'Бейнеқоңырау кезінде мұғалім мен сыныптастарың сені көреді.'
+                }
+            },
+            {
+                id: 'tablet',
+                type: 'input',
+                emoji: '🖊️',
+                ru: {
+                    name: 'Графический планшет',
+                    badge: 'Устройство ВВОДА',
+                    desc: 'Позволяет рисовать специальным пером (стилусом) прямо как настоящим карандашом.',
+                    example: 'Художник рисует героев мультфильмов и спрайты для Scratch.'
+                },
+                kz: {
+                    name: 'Графикалық планшет',
+                    badge: 'ЕНГІЗУ құрылғысы',
+                    desc: 'Арнайы қаламмен (стилуспен) кәдімгі қарындаш сияқты сурет салуға мүмкіндік береді.',
+                    example: 'Суретші мультфильм кейіпкерлері мен Scratch спрайттарын салады.'
+                }
+            },
+            {
+                id: 'monitor',
+                type: 'output',
+                emoji: '🖥️',
+                ru: {
+                    name: 'Монитор',
+                    badge: 'Устройство ВЫВОДА',
+                    desc: 'Показывает на экране текст, картинки, мультфильмы и игры из компьютера.',
+                    example: 'Мы видим, как кот Скретч бегает по сцене.'
+                },
+                kz: {
+                    name: 'Монитор',
+                    badge: 'ШЫҒАРУ құрылғысы',
+                    desc: 'Экранда компьютердегі мәтінді, суреттерді, мультфильмдер мен ойындарды көрсетеді.',
+                    example: 'Біз Скретч мысықтың сахнада жүгіргенін көреміз.'
+                }
+            },
+            {
+                id: 'speakers',
+                type: 'output',
+                emoji: '🔊',
+                ru: {
+                    name: 'Колонки и наушники',
+                    badge: 'Устройство ВЫВОДА',
+                    desc: 'Выводят музыку, голоса героев и звуковые сигналы из компьютера.',
+                    example: 'Мы слышим весёлую мелодию Frutiger Aero и звук мяуканья кота.'
+                },
+                kz: {
+                    name: 'Колонкалар мен құлаққап',
+                    badge: 'ШЫҒАРУ құрылғысы',
+                    desc: 'Компьютерден музыканы, кейіпкерлердің дауысын және дыбыстық сигналдарды шығарады.',
+                    example: 'Біз көңілді әуенді және мысықтың мияулаған дыбысын естиміз.'
+                }
+            },
+            {
+                id: 'printer',
+                type: 'output',
+                emoji: '🖨️',
+                ru: {
+                    name: 'Принтер',
+                    badge: 'Устройство ВЫВОДА',
+                    desc: 'Печатает текст и цветные картинки с экрана компьютера на бумагу.',
+                    example: 'Ты распечатываешь свою именную Грамоту на листе А4!'
+                },
+                kz: {
+                    name: 'Принтер',
+                    badge: 'ШЫҒАРУ құрылғысы',
+                    desc: 'Компьютер экранындағы мәтін мен түрлі-түсті суреттерді қағазға басып шығарады.',
+                    example: 'Сен өзіңнің атаулы Мақтау қағазыңды А4 парағына басып шығарасың!'
+                }
+            },
+            {
+                id: 'projector',
+                type: 'output',
+                emoji: '📽️',
+                ru: {
+                    name: 'Проектор',
+                    badge: 'Устройство ВЫВОДА',
+                    desc: 'Выводит большое изображение с компьютера на белую школьную доску или стену.',
+                    example: 'Учитель показывает презентацию всему классу на большом экране.'
+                },
+                kz: {
+                    name: 'Проектор',
+                    badge: 'ШЫҒАРУ құрылғысы',
+                    desc: 'Компьютердегі үлкен кескінді ақ мектеп тақтасына немесе қабырғаға шығарады.',
+                    example: 'Мұғалім презентацияны бүкіл сыныпқа үлкен экранда көрсетеді.'
+                }
+            }
+        ];
+
+        let currentDeviceFilter = 'all';
+        let selectedDeviceId = 'keyboard';
+
+        function filterDevices(filterType) {
+            currentDeviceFilter = filterType;
+            playSound('click');
+
+            document.querySelectorAll('.device-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-orange-500', 'text-white', 'shadow');
+                btn.classList.add('bg-slate-100', 'text-slate-700');
+            });
+            const activeBtn = document.getElementById('filter-' + filterType);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-slate-100', 'text-slate-700');
+                activeBtn.classList.add('bg-orange-500', 'text-white', 'shadow');
+            }
+            renderDevicesGrid();
+        }
+
+        function renderDevicesGrid() {
+            const grid = document.getElementById('devices-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            const filtered = devicesDB.filter(d => currentDeviceFilter === 'all' || d.type === currentDeviceFilter);
+            filtered.forEach(dev => {
+                const isSelected = dev.id === selectedDeviceId;
+                const card = document.createElement('button');
+                card.type = 'button';
+                card.onclick = () => selectDeviceCard(dev.id);
+                card.className = `p-4 rounded-2xl border-2 text-left transition-all flex flex-col justify-between gap-2 ${
+                    isSelected
+                        ? 'bg-orange-50 border-orange-500 shadow-md scale-[1.02]'
+                        : 'bg-white border-slate-100 hover:border-orange-300 shadow-sm'
+                }`;
+                const badgeColor = dev.type === 'input'
+                    ? 'bg-sky-100 text-sky-700'
+                    : 'bg-emerald-100 text-emerald-700';
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between w-full">
+                        <span class="text-3xl">${dev.emoji}</span>
+                        <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full ${badgeColor}">
+                            ${dev[currentLang].badge}
+                        </span>
+                    </div>
+                    <div class="font-heading font-extrabold text-sm sm:text-base text-slate-900">
+                        ${dev[currentLang].name}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            updateDeviceDetailBox();
+        }
+
+        function selectDeviceCard(id) {
+            selectedDeviceId = id;
+            playSound('click');
+            renderDevicesGrid();
+        }
+
+        function updateDeviceDetailBox() {
+            const dev = devicesDB.find(d => d.id === selectedDeviceId) || devicesDB[0];
+            if (!dev) return;
+            const iconEl = document.getElementById('detail-icon');
+            const badgeEl = document.getElementById('detail-type-badge');
+            const titleEl = document.getElementById('detail-title');
+            const descEl = document.getElementById('detail-desc');
+            const exEl = document.getElementById('detail-example');
+
+            if (iconEl) iconEl.innerText = dev.emoji;
+            if (badgeEl) {
+                badgeEl.innerText = dev[currentLang].badge;
+                badgeEl.className = dev.type === 'input'
+                    ? 'text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-sky-100 text-sky-700'
+                    : 'text-xs font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700';
+            }
+            if (titleEl) titleEl.innerText = dev[currentLang].name;
+            if (descEl) descEl.innerText = dev[currentLang].desc;
+            if (exEl) exEl.innerText = dev[currentLang].example;
+        }
+
+        function speakSelectedDevice() {
+            const dev = devicesDB.find(d => d.id === selectedDeviceId) || devicesDB[0];
+            if (!dev) return;
+            const d = dev[currentLang];
+            speakText(`${d.name}. ${d.badge}. ${d.desc} ${d.example}`);
+        }
+
+        // ==================== 5. ИГРА-СОРТИРОВЩИК УСТРОЙСТВ ====================
+        let sorterItems = [];
+        let selectedSorterItemId = null;
+
+        function initSorterItems() {
+            sorterItems = devicesDB.map(d => ({
+                id: d.id,
+                type: d.type,
+                emoji: d.emoji,
+                sorted: false
+            })).sort(() => Math.random() - 0.5);
+            selectedSorterItemId = null;
+        }
+
+        function renderSorterPool() {
+            const pool = document.getElementById('sorter-pool');
+            const inputDrop = document.getElementById('input-dropped-items');
+            const outputDrop = document.getElementById('output-dropped-items');
+            const scoreEl = document.getElementById('sorter-score');
+            if (!pool || !inputDrop || !outputDrop) return;
+
+            pool.innerHTML = '';
+            inputDrop.innerHTML = '';
+            outputDrop.innerHTML = '';
+
+            let sortedCount = 0;
+
+            sorterItems.forEach(item => {
+                const dev = devicesDB.find(d => d.id === item.id);
+                const label = dev ? dev[currentLang].name : item.id;
+
+                if (!item.sorted) {
+                    const chip = document.createElement('div');
+                    chip.draggable = true;
+                    chip.id = 'sort-chip-' + item.id;
+                    chip.ondragstart = (e) => handleDragStart(e, item.id);
+                    chip.onclick = () => selectSorterChip(item.id);
+                    const isPicked = selectedSorterItemId === item.id;
+                    chip.className = `cursor-pointer select-none px-3.5 py-2 rounded-2xl border-2 font-extrabold text-xs sm:text-sm flex items-center gap-2 transition ${
+                        isPicked
+                            ? 'bg-orange-500 text-white border-orange-600 scale-105 shadow-md'
+                            : 'bg-white text-slate-800 border-orange-200 hover:border-orange-400 shadow-sm'
+                    }`;
+                    chip.innerHTML = `<span class="text-lg">${item.emoji}</span><span>${label}</span>`;
+                    pool.appendChild(chip);
+                } else {
+                    sortedCount++;
+                    const badge = document.createElement('span');
+                    badge.className = item.type === 'input'
+                        ? 'px-3 py-1.5 rounded-xl bg-sky-100 text-sky-900 font-extrabold text-xs flex items-center gap-1.5 shadow-sm'
+                        : 'px-3 py-1.5 rounded-xl bg-emerald-100 text-emerald-900 font-extrabold text-xs flex items-center gap-1.5 shadow-sm';
+                    badge.innerHTML = `<span>${item.emoji}</span><span>${label}</span>`;
+                    if (item.type === 'input') inputDrop.appendChild(badge);
+                    else outputDrop.appendChild(badge);
+                }
+            });
+
+            if (scoreEl) scoreEl.innerText = `${sortedCount} / ${sorterItems.length}`;
+        }
+
+        function selectSorterChip(id) {
+            selectedSorterItemId = (selectedSorterItemId === id) ? null : id;
+            playSound('click');
+            renderSorterPool();
+        }
+
+        function handleDragStart(e, id) {
+            selectedSorterItemId = id;
+            if (e.dataTransfer) {
+                e.dataTransfer.setData('text/plain', id);
+            }
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+        }
+
+        function handleDrop(e, basketType) {
+            e.preventDefault();
+            const id = (e.dataTransfer && e.dataTransfer.getData('text/plain')) || selectedSorterItemId;
+            if (id) placeSelectedInBasket(basketType, id);
+        }
+
+        function placeSelectedInBasket(basketType, forcedId) {
+            const targetId = forcedId || selectedSorterItemId;
+            if (!targetId) return;
+
+            const item = sorterItems.find(i => i.id === targetId);
+            const fb = document.getElementById('sorter-feedback');
+            if (!item) return;
+
+            if (item.type === basketType) {
+                item.sorted = true;
+                selectedSorterItemId = null;
+                playSound('success');
+                if (fb) {
+                    fb.className = 'text-center font-extrabold text-sm min-h-[24px] text-emerald-600';
+                    fb.innerText = currentLang === 'ru' ? 'Верно! Отличная работа!' : 'Дұрыс! Жарайсың!';
+                }
+                renderSorterPool();
+                if (sorterItems.every(i => i.sorted)) {
+                    playSound('win');
+                    if (typeof confetti === 'function') confetti({ particleCount: 60, spread: 65, origin: { y: 0.7 } });
+                    if (fb) {
+                        fb.innerText = currentLang === 'ru'
+                            ? '🎉 Ура! Все 10 устройств разложены правильно!'
+                            : '🎉 Алақай! Барлық 10 құрылғы дұрыс бөлінді!';
+                    }
+                }
+            } else {
+                playSound('error');
+                if (fb) {
+                    fb.className = 'text-center font-extrabold text-sm min-h-[24px] text-rose-600';
+                    fb.innerText = currentLang === 'ru'
+                        ? 'Подумай ещё раз: это устройство вводит или выводит информацию?'
+                        : 'Тағы ойлан: бұл құрылғы ақпаратты енгізе ме, әлде шығара ма?';
+                }
+            }
+        }
+
+        function resetSorter() {
+            playSound('click');
+            initSorterItems();
+            const fb = document.getElementById('sorter-feedback');
+            if (fb) fb.innerText = '';
+            renderSorterPool();
+        }
+
+        // ==================== 6. ТРЕНАЖЕР БЕЗОПАСНОСТИ «МОЖНО ИЛИ НЕЛЬЗЯ?» ====================
+        const safetyCardsData = [
+            {
+                id: 's1',
+                allowed: false,
+                emoji: '🔑',
+                ru: 'Сообщать свой пароль от аккаунта друзьям или незнакомцам в чате',
+                kz: 'Чатта достарыңа немесе бейтаныс адамдарға өз құпиясөзіңді айту'
+            },
+            {
+                id: 's2',
+                allowed: true,
+                emoji: '👀',
+                ru: 'Делать гимнастику для глаз каждые 15–20 минут работы за компьютером',
+                kz: 'Компьютерде 15–20 минут жұмыс істеген сайын көзге жаттығу жасау'
+            },
+            {
+                id: 's3',
+                allowed: false,
+                emoji: '🥤',
+                ru: 'Ставить кружку с чаем или соком прямо рядом с клавиатурой',
+                kz: 'Шай немесе шырын құйылған кесені пернетақтаның дәл жанына қою'
+            },
+            {
+                id: 's4',
+                allowed: true,
+                emoji: '🛡️',
+                ru: 'Сразу рассказать родителям или учителю, если в интернете написали грубость',
+                kz: 'Егер интернетте дөрекі сөз жазса, бірден ата-анаңа немесе мұғалімге айту'
+            },
+            {
+                id: 's5',
+                allowed: false,
+                emoji: '🏠',
+                ru: 'Публиковать в открытой сети свой домашний адрес и номер телефона',
+                kz: 'Ашық желіде үй мекенжайы мен телефон нөмірін жариялау'
+            },
+            {
+                id: 's6',
+                allowed: true,
+                emoji: '🪑',
+                ru: 'Сидеть за столом с ровной спиной на расстоянии вытянутой руки от монитора',
+                kz: 'Монитордан созылған қол қашықтығында арқаны тік ұстап отыру'
+            }
+        ];
+
+        const safetyAnswersState = {};
+
+        function renderSafetyCards() {
+            const grid = document.getElementById('safety-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            safetyCardsData.forEach(item => {
+                const userAns = safetyAnswersState[item.id];
+                const card = document.createElement('div');
+                card.className = 'p-4 rounded-2xl border-2 border-slate-100 bg-slate-50/70 flex flex-col justify-between gap-3 shadow-sm';
+
+                let statusHtml = '';
+                if (userAns !== undefined) {
+                    const isCorrect = userAns === item.allowed;
+                    statusHtml = isCorrect
+                        ? `<span class="text-xs font-extrabold text-emerald-600"><i class="fa-solid fa-circle-check"></i> ${currentLang === 'ru' ? 'Правильно!' : 'Дұрыс!'}</span>`
+                        : `<span class="text-xs font-extrabold text-rose-600"><i class="fa-solid fa-circle-xmark"></i> ${currentLang === 'ru' ? 'Ошибка, подумай!' : 'Қате, ойлан!'}</span>`;
+                }
+
+                card.innerHTML = `
+                    <div class="flex items-start gap-3">
+                        <span class="text-3xl flex-shrink-0">${item.emoji}</span>
+                        <p class="text-sm font-bold text-slate-800 leading-snug">${item[currentLang]}</p>
+                    </div>
+                    <div class="flex items-center justify-between gap-2 pt-1">
+                        <div class="flex gap-2">
+                            <button type="button" onclick="answerSafety('${item.id}', true)" class="px-3 py-1.5 rounded-xl text-xs font-extrabold transition ${
+                                userAns === true
+                                    ? (item.allowed ? 'bg-emerald-500 text-white shadow' : 'bg-rose-500 text-white shadow')
+                                    : 'bg-white border border-emerald-200 text-emerald-700 hover:bg-emerald-50'
+                            }">
+                                ${currentLang === 'ru' ? '👍 Можно' : '👍 Болады'}
+                            </button>
+                            <button type="button" onclick="answerSafety('${item.id}', false)" class="px-3 py-1.5 rounded-xl text-xs font-extrabold transition ${
+                                userAns === false
+                                    ? (!item.allowed ? 'bg-emerald-500 text-white shadow' : 'bg-rose-500 text-white shadow')
+                                    : 'bg-white border border-rose-200 text-rose-700 hover:bg-rose-50'
+                            }">
+                                ${currentLang === 'ru' ? '🚫 Нельзя' : '🚫 Болмайды'}
+                            </button>
+                        </div>
+                        ${statusHtml}
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function answerSafety(id, choice) {
+            safetyAnswersState[id] = choice;
+            const item = safetyCardsData.find(s => s.id === id);
+            if (item && item.allowed === choice) playSound('success');
+            else playSound('error');
+            renderSafetyCards();
+        }
+
+        // ==================== 7. МАСТЕРСКАЯ SCRATCH (СПРАЙТЫ, ЦИКЛЫ, ВЕТВЛЕНИЕ, КООРДИНАТЫ, ПЕРЕМЕННЫЕ) ====================
+        const scratchCatSVG = `<svg viewBox="0 0 120 120" class="w-8 h-8 inline-block" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 44 L16 14 L46 28 Z" fill="#FF9800" stroke="#7C2D12" stroke-width="6" stroke-linejoin="round"/><path d="M96 44 L104 14 L74 28 Z" fill="#FF9800" stroke="#7C2D12" stroke-width="6" stroke-linejoin="round"/><ellipse cx="60" cy="66" rx="44" ry="38" fill="#FF9800" stroke="#7C2D12" stroke-width="6"/><ellipse cx="60" cy="76" rx="30" ry="22" fill="#FFFFFF"/><ellipse cx="45" cy="56" rx="8" ry="10" fill="#FFFFFF" stroke="#7C2D12" stroke-width="4"/><ellipse cx="75" cy="56" rx="8" ry="10" fill="#FFFFFF" stroke="#7C2D12" stroke-width="4"/><circle cx="47" cy="56" r="4" fill="#1E293B"/><circle cx="73" cy="56" r="4" fill="#1E293B"/><ellipse cx="60" cy="69" rx="5" ry="3.5" fill="#EA580C"/><path d="M48 78 Q60 88 72 78" stroke="#7C2D12" stroke-width="4.5" stroke-linecap="round"/><path d="M22 66 L6 62 M22 75 L5 78 M98 66 L114 62 M98 75 L115 78" stroke="#7C2D12" stroke-width="4" stroke-linecap="round"/></svg>`;
+
+        const scratchSpritesDB = [
+            {
+                id: 'cat',
+                iconHtml: scratchCatSVG,
+                ru: {
+                    name: 'Кот Скретч (Фирменный)',
+                    role: 'Главный герой среды Scratch',
+                    exampleCode: 'когда ⚑ нажат → повторить 4 раза [идти 10 шагов, следующий костюм]',
+                    tip: 'Меняет костюмы при движении, создавая эффект живого бега!'
+                },
+                kz: {
+                    name: 'Скретч Мысық (Фирмалық)',
+                    role: 'Scratch ортасының басты кейіпкері',
+                    exampleCode: '⚑ басылғанда → 4 рет қайталау [10 қадам жүру, келесі костюм]',
+                    tip: 'Қозғалған кезде костюмдерін ауыстырып, жүгіру әсерін жасайды!'
+                }
+            },
+            {
+                id: 'robot',
+                iconHtml: '🤖',
+                ru: {
+                    name: 'Робот Байтерек',
+                    role: 'Мастер условий «Если-Иначе»',
+                    exampleCode: 'всегда → если <касается метеорита?> то [изменить Y на 60] иначе [идти 10 шагов]',
+                    tip: 'Умеет сканировать препятствия сенсорами и обходить их!'
+                },
+                kz: {
+                    name: 'Бәйтерек Робот',
+                    role: '«Егер-Әйтпесе» шарттар шебері',
+                    exampleCode: 'әрқашан → егер <метеоритке тисе?> [Y-ті 60-қа өзгерту] әйтпесе [10 қадам жүру]',
+                    tip: 'Сенсорлар арқылы кедергілерді анықтап, айналып өте алады!'
+                }
+            },
+            {
+                id: 'rocket',
+                iconHtml: '🚀',
+                ru: {
+                    name: 'Звёздный Шаттл',
+                    role: 'Навигатор координат X и Y',
+                    exampleCode: 'когда ⚑ нажат → перейти в X: 120, Y: 120 → плыть 1 сек в X: 0, Y: 0',
+                    tip: 'Мгновенно перемещается по координатной сетке сцены!'
+                },
+                kz: {
+                    name: 'Жұлдызды Зымыран',
+                    role: 'X және Y координаталар навигаторы',
+                    exampleCode: '⚑ басылғанда → X: 120, Y: 120 өту → 1 сек X: 0, Y: 0 жүзу',
+                    tip: 'Сахнаның координаттық торы бойынша лезде қозғалады!'
+                }
+            },
+            {
+                id: 'wizard',
+                iconHtml: '🧙‍♂️',
+                ru: {
+                    name: 'Маг Переменных',
+                    role: 'Хранитель очков и таймеров',
+                    exampleCode: 'задать [Очки] значение 0 → если <касается ⭐?> то [изменить Очки на 10]',
+                    tip: 'Управляет игровым счётом, жизнями и победными фанфарами!'
+                },
+                kz: {
+                    name: 'Айнымалылар Сиқыршысы',
+                    role: 'Ұпайлар мен таймер сақтаушысы',
+                    exampleCode: '[Ұпай] мәнін 0 ету → егер <⭐ тисе?> [Ұпайды 10-ға өзгерту]',
+                    tip: 'Ойын ұпайларын, өмір санын және жеңіс дыбыстарын басқарады!'
+                }
+            }
+        ];
+
+        let activeStageSpriteEmoji = scratchCatSVG;
+        let currentScratchMissionIdx = 0;
+        let scratchProgram = [];
+        let spritePos = { x: 0, y: 0 };
+        let spriteScore = 0;
+        let stageStars = [];
+        let stageHazards = [];
+
+        const scratchMissions = [
+            {
+                ru: {
+                    goal: 'Задача: Собери 3 звёзды в ряд с помощью блока цикла «Повторить 3 раза [Шаг X +40]»!',
+                    blocks: [
+                        { id: 'loop3_x', color: 'bg-amber-500', label: 'повторить 3 раза [изменить X на 40]' },
+                        { id: 'step_x', color: 'bg-blue-500', label: 'изменить X на 40' },
+                        { id: 'add_score', color: 'bg-orange-600', label: 'изменить [Очки] на 10' }
+                    ]
+                },
+                kz: {
+                    goal: 'Тапсырма: «3 рет қайталау [X-ті 40-қа өзгерту]» циклімен қатардағы 3 жұлдызды жина!',
+                    blocks: [
+                        { id: 'loop3_x', color: 'bg-amber-500', label: '3 рет қайталау [X-ті 40-қа өзгерту]' },
+                        { id: 'step_x', color: 'bg-blue-500', label: 'X-ті 40-қа өзгерту' },
+                        { id: 'add_score', color: 'bg-orange-600', label: '[Ұпай] 10-ға өзгерту' }
+                    ]
+                },
+                setup: () => {
+                    spritePos = { x: 0, y: 0 };
+                    spriteScore = 0;
+                    stageStars = [{ x: 40, y: 0 }, { x: 80, y: 0 }, { x: 120, y: 0 }];
+                    stageHazards = [];
+                }
+            },
+            {
+                ru: {
+                    goal: 'Задача: Впереди метеорит! Используй ветвление «Если метеорит — обойти по Y, иначе — шаг X»!',
+                    blocks: [
+                        { id: 'if_avoid', color: 'bg-amber-600', label: 'если <впереди ☄️?> то [Y +40, X +80, Y -40] иначе [X +40]' },
+                        { id: 'step_x', color: 'bg-blue-500', label: 'изменить X на 40' },
+                        { id: 'add_score', color: 'bg-orange-600', label: 'изменить [Очки] на 20' }
+                    ]
+                },
+                kz: {
+                    goal: 'Тапсырма: Алда метеорит бар! «Егер метеорит болса — Y бойынша айналып өт, әйтпесе — X қадам» шартын қолдан!',
+                    blocks: [
+                        { id: 'if_avoid', color: 'bg-amber-600', label: 'егер <алда ☄️?> [Y +40, X +80, Y -40] әйтпесе [X +40]' },
+                        { id: 'step_x', color: 'bg-blue-500', label: 'X-ті 40-қа өзгерту' },
+                        { id: 'add_score', color: 'bg-orange-600', label: '[Ұпай] 20-ға өзгерту' }
+                    ]
+                },
+                setup: () => {
+                    spritePos = { x: 0, y: 0 };
+                    spriteScore = 0;
+                    stageStars = [{ x: 120, y: 0 }];
+                    stageHazards = [{ x: 40, y: 0 }];
+                }
+            },
+            {
+                ru: {
+                    goal: 'Задача: Долети до верхней правой точки сцены X: 120, Y: 120 и забери супер-звезду!',
+                    blocks: [
+                        { id: 'goto_120', color: 'bg-blue-600', label: 'перейти в X: 120, Y: 120' },
+                        { id: 'step_y', color: 'bg-sky-500', label: 'изменить Y на 40' },
+                        { id: 'add_score', color: 'bg-orange-600', label: 'изменить [Очки] на 50' }
+                    ]
+                },
+                kz: {
+                    goal: 'Тапсырма: Сахнаның жоғарғы оң жақ нүктесіне X: 120, Y: 120 жетіп, супер-жұлдызды ал!',
+                    blocks: [
+                        { id: 'goto_120', color: 'bg-blue-600', label: 'X: 120, Y: 120 нүктесіне өту' },
+                        { id: 'step_y', color: 'bg-sky-500', label: 'Y-ті 40-қа өзгерту' },
+                        { id: 'add_score', color: 'bg-orange-600', label: '[Ұпай] 50-ге өзгерту' }
+                    ]
+                },
+                setup: () => {
+                    spritePos = { x: 0, y: 0 };
+                    spriteScore = 0;
+                    stageStars = [{ x: 120, y: 120 }];
+                    stageHazards = [{ x: 80, y: 80 }];
+                }
+            }
+        ];
+
+        function renderScratchSpritesGallery() {
+            const grid = document.getElementById('scratch-sprites-grid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            scratchSpritesDB.forEach(sp => {
+                const isSelected = activeStageSpriteEmoji === sp.iconHtml;
+                const card = document.createElement('div');
+                card.onclick = () => {
+                    activeStageSpriteEmoji = sp.iconHtml;
+                    playSound('click');
+                    renderScratchSpritesGallery();
+                    renderScratchStageGrid();
+                };
+                card.className = `cursor-pointer rounded-2xl p-4 border-2 transition-all flex flex-col justify-between space-y-2.5 ${
+                    isSelected
+                        ? 'bg-white border-orange-500 shadow-md scale-[1.02]'
+                        : 'bg-white/90 border-orange-200 hover:border-orange-400'
+                }`;
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl ${isSelected ? 'bg-orange-500 text-white' : 'bg-orange-100'} flex items-center justify-center text-2xl shadow-sm flex-shrink-0">
+                            ${sp.iconHtml}
+                        </div>
+                        <div>
+                            <h4 class="font-heading font-extrabold text-slate-900 text-sm">${sp[currentLang].name}</h4>
+                            <span class="text-[11px] font-bold text-orange-600">${sp[currentLang].role}</span>
+                        </div>
+                    </div>
+                    <div class="p-2.5 rounded-xl bg-orange-50 border border-orange-200 text-[11px] font-mono font-bold text-orange-950 leading-snug">
+                        ${sp[currentLang].exampleCode}
+                    </div>
+                    <p class="text-[11px] font-semibold text-slate-600 leading-tight">${sp[currentLang].tip}</p>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function loadScratchMission(idx) {
+            currentScratchMissionIdx = idx;
+            const mission = scratchMissions[idx];
+            if (!mission) return;
+
+            document.querySelectorAll('.scratch-mission-btn').forEach((btn, i) => {
+                if (i === idx) {
+                    btn.className = 'scratch-mission-btn px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-extrabold bg-orange-500 text-white shadow transition';
+                } else {
+                    btn.className = 'scratch-mission-btn px-3.5 py-2 rounded-2xl text-xs sm:text-sm font-extrabold bg-orange-50 text-orange-800 hover:bg-orange-100 transition';
+                }
+            });
+
+            const goalEl = document.getElementById('scratch-mission-goal');
+            if (goalEl) goalEl.innerText = mission[currentLang].goal;
+
+            const paletteEl = document.getElementById('scratch-palette');
+            if (paletteEl) {
+                paletteEl.innerHTML = '';
+                mission[currentLang].blocks.forEach(blk => {
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.onclick = () => addScratchBlock(blk);
+                    btn.className = `w-full text-left px-3 py-2 rounded-xl ${blk.color} text-white font-extrabold text-xs shadow-sm hover:opacity-95 transition flex items-center justify-between gap-2`;
+                    btn.innerHTML = `<span>${blk.label}</span><i class="fa-solid fa-plus"></i>`;
+                    paletteEl.appendChild(btn);
+                });
+            }
+
+            scratchProgram = [];
+            mission.setup();
+            renderScratchWorkspace();
+            renderScratchStageGrid();
+        }
+
+        function addScratchBlock(blk) {
+            playSound('click');
+            scratchProgram.push(blk);
+            renderScratchWorkspace();
+        }
+
+        function clearScratchWorkspace() {
+            playSound('click');
+            scratchProgram = [];
+            scratchMissions[currentScratchMissionIdx].setup();
+            const statusEl = document.getElementById('scratch-status');
+            if (statusEl) statusEl.innerText = '';
+            renderScratchWorkspace();
+            renderScratchStageGrid();
+        }
+
+        function renderScratchWorkspace() {
+            const ws = document.getElementById('scratch-workspace');
+            if (!ws) return;
+            ws.innerHTML = '';
+
+            if (scratchProgram.length === 0) {
+                const hint = document.createElement('div');
+                hint.className = 'text-xs font-bold text-slate-400 italic py-4 text-center';
+                hint.innerText = currentLang === 'ru'
+                    ? 'Нажимай на блоки слева, чтобы собрать программу...'
+                    : 'Бағдарлама құру үшін сол жақтағы блоктарды бас...';
+                ws.appendChild(hint);
+                return;
+            }
+
+            scratchProgram.forEach((blk, idx) => {
+                const div = document.createElement('div');
+                div.className = `px-3 py-1.5 rounded-xl ${blk.color} text-white font-extrabold text-xs shadow-sm flex items-center justify-between`;
+                div.innerHTML = `<span>${idx + 1}. ${blk.label}</span>`;
+                ws.appendChild(div);
+            });
+        }
+
+        function renderScratchStageGrid() {
+            const grid = document.getElementById('scratch-stage-grid');
+            const xEl = document.getElementById('sc-x');
+            const yEl = document.getElementById('sc-y');
+            const scoreEl = document.getElementById('sc-score');
+            if (!grid) return;
+
+            grid.innerHTML = '';
+            for (let row = 3; row >= 0; row--) {
+                for (let col = 0; col < 4; col++) {
+                    const cellX = col * 40;
+                    const cellY = row * 40;
+                    const cell = document.createElement('div');
+                    cell.className = 'rounded-xl bg-white/80 border border-orange-200 flex items-center justify-center relative text-xl';
+
+                    const isSpriteHere = spritePos.x === cellX && spritePos.y === cellY;
+                    const isStarHere = stageStars.some(s => s.x === cellX && s.y === cellY);
+                    const isHazardHere = stageHazards.some(h => h.x === cellX && h.y === cellY);
+
+                    if (isSpriteHere) {
+                        cell.innerHTML = `<div class="scale-90">${activeStageSpriteEmoji}</div>`;
+                    } else if (isStarHere) {
+                        cell.innerHTML = '⭐';
+                    } else if (isHazardHere) {
+                        cell.innerHTML = '☄️';
+                    } else {
+                        cell.innerHTML = `<span class="text-[9px] font-bold text-slate-300">${cellX},${cellY}</span>`;
+                    }
+
+                    grid.appendChild(cell);
+                }
+            }
+
+            if (xEl) xEl.innerText = spritePos.x;
+            if (yEl) yEl.innerText = spritePos.y;
+            if (scoreEl) scoreEl.innerText = spriteScore;
+        }
+
+        function runScratchProgram() {
+            const mission = scratchMissions[currentScratchMissionIdx];
+            mission.setup();
+            let hitHazard = false;
+
+            scratchProgram.forEach(blk => {
+                if (blk.id === 'loop3_x') {
+                    for (let i = 0; i < 3; i++) {
+                        spritePos.x = Math.min(120, spritePos.x + 40);
+                        collectStarAtPos();
+                    }
+                } else if (blk.id === 'step_x') {
+                    spritePos.x = Math.min(120, spritePos.x + 40);
+                    if (stageHazards.some(h => h.x === spritePos.x && h.y === spritePos.y)) {
+                        hitHazard = true;
+                    }
+                    collectStarAtPos();
+                } else if (blk.id === 'step_y') {
+                    spritePos.y = Math.min(120, spritePos.y + 40);
+                    collectStarAtPos();
+                } else if (blk.id === 'if_avoid') {
+                    spritePos.x = Math.min(120, spritePos.x + 80);
+                    collectStarAtPos();
+                } else if (blk.id === 'goto_120') {
+                    spritePos = { x: 120, y: 120 };
+                    collectStarAtPos();
+                } else if (blk.id === 'add_score') {
+                    spriteScore += 10;
+                }
+            });
+
+            renderScratchStageGrid();
+            const statusEl = document.getElementById('scratch-status');
+
+            if (hitHazard) {
+                playSound('error');
+                if (statusEl) {
+                    statusEl.className = 'text-xs font-extrabold text-center min-h-[20px] text-rose-600';
+                    statusEl.innerText = currentLang === 'ru'
+                        ? 'Ой! Спрайт столкнулся с метеоритом! Используй условие «Если — Иначе».'
+                        : 'Ой! Спрайт метеоритке соғылды! «Егер — Әйтпесе» шартын қолдан.';
+                }
+            } else if (stageStars.length === 0) {
+                playSound('win');
+                if (statusEl) {
+                    statusEl.className = 'text-xs font-extrabold text-center min-h-[20px] text-emerald-600';
+                    statusEl.innerText = currentLang === 'ru'
+                        ? '🌟 Миссия выполнена! Все звёзды собраны!'
+                        : '🌟 Миссия орындалды! Барлық жұлдыздар жиналды!';
+                }
+            } else {
+                playSound('click');
+                if (statusEl) {
+                    statusEl.className = 'text-xs font-extrabold text-center min-h-[20px] text-orange-700';
+                    statusEl.innerText = currentLang === 'ru'
+                        ? 'Спрайт выполнил команды, но звёзды ещё остались!'
+                        : 'Спрайт командаларды орындады, бірақ жұлдыздар әлі қалды!';
+                }
+            }
+        }
+
+        function collectStarAtPos() {
+            const idx = stageStars.findIndex(s => s.x === spritePos.x && s.y === spritePos.y);
+            if (idx !== -1) {
+                stageStars.splice(idx, 1);
+                spriteScore += 10;
+            }
+        }
+
+        // ==================== 8. ИТОГОВЫЙ ТЕСТ (12 ВОПРОСОВ) ====================
+        const quizQuestionsDB = [
+            {
+                ru: {
+                    q: '1. Какое устройство помогает вводить буквы и цифры в компьютер?',
+                    options: ['Монитор', 'Клавиатура', 'Принтер', 'Колонки'],
+                    correct: 1
+                },
+                kz: {
+                    q: '1. Компьютерге әріптер мен сандарды енгізуге қай құрылғы көмектеседі?',
+                    options: ['Монитор', 'Пернетақта', 'Принтер', 'Колонкалар'],
+                    correct: 1
+                }
+            },
+            {
+                ru: {
+                    q: '2. К какой группе устройств относится монитор?',
+                    options: ['Устройство ввода', 'Устройство вывода', 'Устройство хранения', 'Для записи звука'],
+                    correct: 1
+                },
+                kz: {
+                    q: '2. Монитор құрылғылардың қай тобына жатады?',
+                    options: ['Енгізу құрылғысы', 'Шығару құрылғысы', 'Сақтау құрылғысы', 'Дыбыс жазу үшін'],
+                    correct: 1
+                }
+            },
+            {
+                ru: {
+                    q: '3. С помощью какого устройства можно записать свой голос для мультфильма в Scratch?',
+                    options: ['Сканер', 'Микрофон', 'Проектор', 'Принтер'],
+                    correct: 1
+                },
+                kz: {
+                    q: '3. Scratch-тегі мультфильмге өз дауысыңды қай құрылғының көмегімен жазуға болады?',
+                    options: ['Сканер', 'Микрофон', 'Проектор', 'Принтер'],
+                    correct: 1
+                }
+            },
+            {
+                ru: {
+                    q: '4. Что делает сканер?',
+                    options: ['Печатает текст на бумагу', 'Переносит бумажный рисунок в компьютер', 'Показывает кино на стене', 'Воспроизводит музыку'],
+                    correct: 1
+                },
+                kz: {
+                    q: '4. Сканер не істейді?',
+                    options: ['Мәтінді қағазға басады', 'Қағаздағы суретті компьютерге көшіреді', 'Қабырғаға кино көрсетеді', 'Музыка ойнатады'],
+                    correct: 1
+                }
+            },
+            {
+                ru: {
+                    q: '5. Какое устройство выводит изображение с компьютера на лист бумаги?',
+                    options: ['Принтер', 'Мышь', 'Веб-камера', 'Графический планшет'],
+                    correct: 0
+                },
+                kz: {
+                    q: '5. Компьютердегі кескінді қағаз бетіне қай құрылғы шығарады?',
+                    options: ['Принтер', 'Тінтуір', 'Веб-камера', 'Графикалық планшет'],
+                    correct: 0
+                }
+            },
+            {
+                ru: {
+                    q: '6. Сколько минут подряд ученику 2 класса рекомендуется работать за компьютером без перерыва?',
+                    options: ['15–20 минут', '2 часа', 'Весь день', '5 часов'],
+                    correct: 0
+                },
+                kz: {
+                    q: '6. 2-сынып оқушысына компьютерде үзіліссіз қанша минут жұмыс істеу ұсынылады?',
+                    options: ['15–20 минут', '2 сағат', 'Күні бойы', '5 сағат'],
+                    correct: 0
+                }
+            },
+            {
+                ru: {
+                    q: '7. Что НЕЛЬЗЯ рассказывать незнакомцам в интернете?',
+                    options: ['Свою любимую сказку', 'Свой пароль и домашний адрес', 'Название любимого цвета', 'Что ты учишься во 2 классе'],
+                    correct: 1
+                },
+                kz: {
+                    q: '7. Интернетте бейтаныс адамдарға нені айтуға БОЛМАЙДЫ?',
+                    options: ['Сүйікті ертегіңді', 'Құпиясөзің мен үй мекенжайыңды', 'Сүйікті түсіңді', '2-сыныпта оқитыныңды'],
+                    correct: 1
+                }
+            },
+            {
+                ru: {
+                    q: '8. Как называется персонаж-исполнитель в программе Scratch?',
+                    options: ['Спрайт', 'Пиксель', 'Папка', 'Курсор'],
+                    correct: 0
+                },
+                kz: {
+                    q: '8. Scratch бағдарламасындағы орындаушы кейіпкер қалай аталады?',
+                    options: ['Спрайт', 'Пиксель', 'Қалта', 'Курсор'],
+                    correct: 0
+                }
+            },
+            {
+                ru: {
+                    q: '9. Для чего в Scratch нужен блок «Повторить 10 раз»?',
+                    options: ['Чтобы удалить спрайт', 'Чтобы выполнить команды внутри несколько раз (цикл)', 'Чтобы выключить компьютер', 'Чтобы изменить цвет монитора'],
+                    correct: 1
+                },
+                kz: {
+                    q: '9. Scratch-те «10 рет қайталау» блогы не үшін қажет?',
+                    options: ['Спрайтты өшіру үшін', 'Ішіндегі командаларды бірнеше рет орындау үшін (цикл)', 'Компьютерді өшіру үшін', 'Монитор түсін өзгерту үшін'],
+                    correct: 1
+                }
+            },
+            {
+                ru: {
+                    q: '10. Какая координата в Scratch отвечает за движение спрайта ВВЕРХ и ВНИЗ?',
+                    options: ['Координата Y', 'Координата X', 'Громкость', 'Таймер'],
+                    correct: 0
+                },
+                kz: {
+                    q: '10. Scratch-те спрайттың ЖОҒАРЫ және ТӨМЕН қозғалуына қай координата жауап береді?',
+                    options: ['Y координатасы', 'X координатасы', 'Дыбыс қаттылығы', 'Таймер'],
+                    correct: 0
+                }
+            },
+            {
+                ru: {
+                    q: '11. Какой блок в Scratch помогает спрайту принимать решение (например, обойти препятствие)?',
+                    options: ['Условие «Если — то — иначе»', 'Очистить экран', 'Спрятаться', 'Остановить всё'],
+                    correct: 0
+                },
+                kz: {
+                    q: '11. Scratch-те спрайтқа шешім қабылдауға (мысалы, кедергіні айналып өтуге) қай блок көмектеседі?',
+                    options: ['«Егер — онда — әйтпесе» шарты', 'Экранды тазалау', 'Жасырыну', 'Бәрін тоқтату'],
+                    correct: 0
+                }
+            },
+            {
+                ru: {
+                    q: '12. Зачем в играх на Scratch используют переменные (например, «Очки»)?',
+                    options: ['Чтобы считать и запоминать игровой счёт', 'Чтобы рисовать фон', 'Чтобы чистить клавиатуру', 'Чтобы печатать на принтере'],
+                    correct: 0
+                },
+                kz: {
+                    q: '12. Scratch ойындарында айнымалыларды (мысалы, «Ұпай») не үшін қолданады?',
+                    options: ['Ойын ұпайын санау және есте сақтау үшін', 'Фон салу үшін', 'Пернетақтаны тазалау үшін', 'Принтерден басып шығару үшін'],
+                    correct: 0
+                }
+            }
+        ];
+
+        const userQuizAnswers = {};
+
+        function renderQuiz() {
+            const container = document.getElementById('quiz-container');
+            if (!container) return;
+            container.innerHTML = '';
+
+            quizQuestionsDB.forEach((item, qIdx) => {
+                const qData = item[currentLang];
+                const chosen = userQuizAnswers[qIdx];
+
+                const qCard = document.createElement('div');
+                qCard.className = 'p-4 sm:p-5 rounded-2xl border-2 border-slate-100 bg-slate-50/70 space-y-3';
+
+                const optionsHtml = qData.options.map((opt, oIdx) => {
+                    const isSelected = chosen === oIdx;
+                    return `
+                        <button type="button" onclick="selectQuizOption(${qIdx}, ${oIdx})" class="w-full text-left px-4 py-2.5 rounded-xl border-2 font-bold text-xs sm:text-sm transition flex items-center gap-2.5 ${
+                            isSelected
+                                ? 'bg-orange-500 text-white border-orange-600 shadow-sm'
+                                : 'bg-white text-slate-700 border-slate-200 hover:border-orange-300'
+                        }">
+                            <span class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-extrabold ${
+                                isSelected ? 'bg-white text-orange-600' : 'bg-slate-100 text-slate-600'
+                            }">${String.fromCharCode(65 + oIdx)}</span>
+                            <span>${opt}</span>
+                        </button>
+                    `;
+                }).join('');
+
+                qCard.innerHTML = `
+                    <div class="flex items-start justify-between gap-2">
+                        <h3 class="font-heading font-extrabold text-sm sm:text-base text-slate-900">${qData.q}</h3>
+                        <button type="button" onclick="speakQuizQuestion(${qIdx})" class="flex-shrink-0 w-8 h-8 rounded-full bg-orange-100 text-orange-600 hover:bg-orange-200 flex items-center justify-center transition" title="Озвучить вопрос">
+                            <i class="fa-solid fa-volume-high text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        ${optionsHtml}
+                    </div>
+                `;
+                container.appendChild(qCard);
+            });
+        }
+
+        function selectQuizOption(qIdx, oIdx) {
+            userQuizAnswers[qIdx] = oIdx;
+            playSound('click');
+            renderQuiz();
+        }
+
+        function speakQuizQuestion(qIdx) {
+            const qData = quizQuestionsDB[qIdx][currentLang];
+            speakText(`${qData.q}. ${qData.options.join(', ')}`);
+        }
+
+        function submitQuiz() {
+            const total = quizQuestionsDB.length;
+            let score = 0;
+
+            quizQuestionsDB.forEach((item, idx) => {
+                if (userQuizAnswers[idx] === item[currentLang].correct) {
+                    score++;
+                }
+            });
+
+            lastQuizScore = score;
+            const percent = Math.round((score / total) * 100);
+            const resultBox = document.getElementById('quiz-result-box');
+
+            if (resultBox) {
+                resultBox.classList.remove('hidden');
+                if (percent >= 70) {
+                    playSound('win');
+                    if (typeof confetti === 'function') confetti({ particleCount: 90, spread: 80, origin: { y: 0.6 } });
+                    resultBox.className = 'p-5 rounded-2xl text-center space-y-2 bg-emerald-50 border-2 border-emerald-300 text-emerald-900';
+                    resultBox.innerHTML = currentLang === 'ru'
+                        ? `<div class="text-2xl font-heading font-extrabold">🎉 Поздравляем! Результат: ${score} из ${total} (${percent}%)</div><p class="font-bold text-sm">Твоя именная Грамота открыта ниже! Нажми «Распечатать / Сохранить в PDF».</p>`
+                        : `<div class="text-2xl font-heading font-extrabold">🎉 Құттықтаймыз! Нәтиже: ${total} ішінен ${score} (${percent}%)</div><p class="font-bold text-sm">Сенің атаулы Мақтау қағазың төменде ашылды! «Басып шығару / PDF сақтау» батырмасын бас.</p>`;
+
+                    const diplomaSec = document.getElementById('sec-diploma');
+                    if (diplomaSec) {
+                        diplomaSec.classList.remove('hidden');
+                        updateDiplomaPreview();
+                        setTimeout(() => scrollToSection('sec-diploma'), 500);
+                    }
+                } else {
+                    playSound('error');
+                    resultBox.className = 'p-5 rounded-2xl text-center space-y-2 bg-amber-50 border-2 border-amber-300 text-amber-900';
+                    resultBox.innerHTML = currentLang === 'ru'
+                        ? `<div class="text-xl font-heading font-extrabold">Результат: ${score} из ${total} (${percent}%)</div><p class="font-bold text-sm">Для получения Грамоты нужно набрать минимум 8 правильных ответов (70%). Попробуй ответить на оставшиеся вопросы!</p>`
+                        : `<div class="text-xl font-heading font-extrabold">Нәтиже: ${total} ішінен ${score} (${percent}%)</div><p class="font-bold text-sm">Мақтау қағазын алу үшін кемінде 8 дұрыс жауап (70%) жинау керек. Қайта тексеріп көр!</p>`;
+                }
+            }
+        }
+
+        // ==================== 9. ГЕНЕРАЦИЯ И НАСТРОЙКА ГРАМОТЫ ====================
+        let selectedAvatarEmoji = scratchCatSVG;
+        let lastQuizScore = 0;
+
+        function selectAvatar(type, btn) {
+            playSound('click');
+            document.querySelectorAll('.avatar-btn').forEach(b => {
+                b.classList.remove('border-brand-500', 'bg-brand-50');
+                b.classList.add('border-slate-200', 'bg-white');
+            });
+            btn.classList.remove('border-slate-200', 'bg-white');
+            btn.classList.add('border-brand-500', 'bg-brand-50');
+
+            if (type === 'scratchcat') selectedAvatarEmoji = scratchCatSVG;
+            if (type === 'robot') selectedAvatarEmoji = '🤖';
+            if (type === 'leopard') selectedAvatarEmoji = '🐆';
+            if (type === 'owl') selectedAvatarEmoji = '🦉';
+            activeStageSpriteEmoji = selectedAvatarEmoji;
+
+            renderScratchSpritesGallery();
+            renderScratchStageGrid();
+            updateDiplomaPreview();
+        }
+
+        function setDiplomaTheme(theme) {
+            playSound('click');
+            const dip = document.getElementById('printable-diploma');
+            if (!dip) return;
+            dip.classList.remove('diploma-theme-kz', 'diploma-theme-space', 'diploma-theme-gold');
+            dip.classList.add('diploma-theme-' + theme);
+        }
+
+        function updateDiplomaPreview() {
+            const nameInput = document.getElementById('student-name');
+            const classSelect = document.getElementById('student-class');
+            const nameRaw = nameInput ? nameInput.value.trim() : '';
+            const defaultName = currentLang === 'ru' ? 'Ученик 2 класса' : '2-сынып оқушысы';
+            const studentName = nameRaw || defaultName;
+            const studentClass = classSelect ? classSelect.value : '2 «А»';
+
+            const nameEl = document.getElementById('dip-student-name');
+            const classEl = document.getElementById('dip-student-class');
+            const avatarEl = document.getElementById('dip-avatar-badge');
+            const scoreEl = document.getElementById('dip-score');
+            const dateEl = document.getElementById('dip-date');
+
+            if (nameEl) nameEl.innerText = studentName;
+            if (classEl) classEl.innerText = `${studentClass} ${translations[currentLang].dipClassSuffix}`;
+            if (avatarEl) avatarEl.innerHTML = selectedAvatarEmoji;
+
+            const total = quizQuestionsDB.length;
+            const pct = Math.round((lastQuizScore / total) * 100);
+            if (scoreEl) scoreEl.innerText = `${lastQuizScore}/${total} (${pct}%)`;
+
+            const today = new Date();
+            if (dateEl) dateEl.innerText = today.toLocaleDateString(currentLang === 'kz' ? 'kk-KZ' : 'ru-RU');
+        }
+
+        // ==================== 10. ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ ====================
+        window.addEventListener('DOMContentLoaded', () => {
+            initSorterItems();
+            renderDevicesGrid();
+            renderSorterPool();
+            renderSafetyCards();
+            renderScratchSpritesGallery();
+            loadScratchMission(0);
+            renderQuiz();
+            updateDiplomaPreview();
+        });
+    </script>
+</body>
+</html>
